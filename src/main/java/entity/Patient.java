@@ -1,5 +1,8 @@
 package entity;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Scanner;
 
 public final class Patient extends Person {
@@ -7,6 +10,7 @@ public final class Patient extends Person {
     private String diagnosis;
     private Integer id;
 
+    private final static Logger logger= LoggerFactory.getLogger(Patient.class);
 
     public Doctor getDoctor() {
         return doctor;
@@ -48,7 +52,6 @@ public final class Patient extends Person {
         String dijagnoza=sc.nextLine();
 
         Patient patient=new Patient.PatientBuilder(ime,oib,dijagnoza).build();
-        Person.addPerson(patient);
 
         return patient;
     }

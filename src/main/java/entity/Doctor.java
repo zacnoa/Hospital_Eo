@@ -1,5 +1,8 @@
 package entity;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Scanner;
 
 public final class Doctor extends Person implements Printable  {
@@ -7,7 +10,7 @@ public final class Doctor extends Person implements Printable  {
     private Patient[] patients;
     private Integer patientCount;
 
-
+    private final static Logger logger= LoggerFactory.getLogger(Doctor.class);
 
     public Doctor(DoctorBuilder doctorBuilder) {
         super(doctorBuilder.name,doctorBuilder.OIB);
@@ -35,21 +38,26 @@ public final class Doctor extends Person implements Printable  {
         }
     }
 
-    static Doctor generateDoctor(Scanner sc){
+    static Doctor generateDoctor(Scanner sc) throws IllegalArgumentException{
 
+            System.out.println("Unesite ime doktora:");
+            String name = sc.nextLine();
+            if(name.isEmpty())
+            {
+                throw new IllegalArgumentException("Ime doktora ne smije biti prazno");
+            }
 
-        System.out.println("Unesite ime doktora:");
-        String name=sc.nextLine();
+            System.out.println("Unesite OIB doktora:");
+            String OIB = sc.nextLine();
 
-        System.out.println("Unesite OIB doktora:");
-        String OIB=sc.nextLine();
+            System.out.println("Unesite specijalizaciju doktora:");
+            String specialty = sc.nextLine();
 
-        System.out.println("Unesite specijalizaciju doktora:");
-        String specialty=sc.nextLine();
-        Doctor doctor=new Doctor.DoctorBuilder(name,OIB,specialty).build();
+            Doctor doctor = new Doctor.DoctorBuilder(name, OIB, specialty).build();
+
 
         Person.addPerson(doctor);
-
+        logger.info("Stvoren je doktor s imenom: {}",name);
         return doctor;
 
     }

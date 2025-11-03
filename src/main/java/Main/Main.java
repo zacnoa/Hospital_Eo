@@ -3,6 +3,9 @@ package Main;
 import entity.Department;
 import entity.ArrayException;
 import entity.Person;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Scanner;
 
 
@@ -11,7 +14,7 @@ public class Main {
     static void main(String[] args) {
 
 
-
+        Logger logger= LoggerFactory.getLogger(Main.class);
 
 
 
@@ -19,8 +22,8 @@ public class Main {
 
         System.out.println("Dobro došli u našu bolnicu!!\nMolimo vas popunite našu evidenciju.");
         Department[] departments= new  Department[10];
-        departments[0]=Department.generateDepartment(sc);
-        Integer departmentCount=1;
+        Integer departmentCount=0;
+
 
 
 
@@ -47,13 +50,17 @@ public class Main {
                 case "1" -> {
                     boolean failedFlag;
                     do {
-                        failedFlag=false;
+                        failedFlag = false;
                         try {
-                            departments[departmentCount++] = Department.generateDepartment(sc);
+                            departments[departmentCount] = Department.generateDepartment(sc);
+                            departmentCount++;
                         }
                         catch (IllegalArgumentException e) {
                             failedFlag=true;
+
+                            logger.error(e.getMessage(),e);
                             System.out.println(e.getMessage());
+
                         }
                     }while(failedFlag);
                 }
@@ -88,7 +95,18 @@ public class Main {
                                 thirdCommand = sc.nextLine();
                                 switch (thirdCommand) {
                                     case "1" -> {
-                                        departments[izabraniOdjel - 1].addDoctor(sc);
+                                        boolean failedFlag;
+                                        do {
+                                            failedFlag = false;
+                                            try {
+                                                departments[izabraniOdjel - 1].addDoctor(sc);
+                                            }catch(IllegalArgumentException e)
+                                            {
+                                                System.out.println(e.getMessage());
+                                                logger.error(e.getMessage(),e);
+                                                failedFlag=true;
+                                            }
+                                        }while(failedFlag);
                                     }
                                     case "2" ->{
                                         boolean failedFlag;
@@ -99,12 +117,13 @@ public class Main {
                                             }
                                             catch (IndexOutOfBoundsException e) {
                                                 failedFlag=true;
+                                                logger.error(e.getMessage(),e);
                                                 System.out.println(e.getMessage());
                                             }
                                             catch(ArrayException e)
                                             {
+                                                logger.error(e.getMessage(),e);
                                                 System.out.println(e.getMessage());
-                                                break;
                                             }
                                         }while(failedFlag);
                                     }

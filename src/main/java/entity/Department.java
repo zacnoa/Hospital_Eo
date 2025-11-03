@@ -1,5 +1,8 @@
 package entity;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -14,7 +17,7 @@ public class Department {
     Appoitnment[] appoitnments;
     private Integer appoitnmentCount;
 
-
+    private static final Logger logger= LoggerFactory.getLogger(Department.class);
 
 
 
@@ -50,9 +53,10 @@ public class Department {
         return name;
     }
 
-    public  void addDoctor(Scanner sc)
+    public  void addDoctor(Scanner sc) throws IllegalArgumentException
     {
-        doctors[doctorCount++]= Doctor.generateDoctor(sc);
+        doctors[doctorCount]= Doctor.generateDoctor(sc);
+        doctorCount++;
     }
 
     public static Department generateDepartment(Scanner sc) throws IllegalArgumentException
@@ -64,7 +68,7 @@ public class Department {
         {
             throw new IllegalArgumentException("Ime odjela nemože bit prazno");
         }
-
+        logger.info("Stvoren je odjel sa imenom: {}", name);
         return new Department(name);
     }
 
@@ -85,12 +89,13 @@ public class Department {
             System.out.println(i+1 + ".) "+ doctors[i].getName());
         }
         Integer doctorSelection=sc.nextInt();
+        sc.skip("\n");
 
-        if(doctorSelection-1>doctorCount || doctorSelection<0)
+        if(doctorSelection>doctorCount || doctorSelection<0)
         {
             throw new IndexOutOfBoundsException("Unesen je redni broj doktora koji ne postoji");
+
         }
-        sc.skip("\n");
 
         System.out.println("Izaberite redni broj pored sobe gdje ce se nalaziti  pacijent:");
         for(Integer i=0;i<roomCount;i++)
@@ -99,12 +104,14 @@ public class Department {
         }
 
         Integer roomSelection=sc.nextInt();
-        if(roomSelection-1>roomCount || roomSelection<0)
+        sc.skip("\n");
+        if(roomSelection>roomCount || roomSelection<0)
         {
             throw new IndexOutOfBoundsException("Unesen je redni broj sobe koja ne postoji");
         }
-        sc.skip("\n");
 
+        Person.addPerson(patient);
+        logger.info("Kreiran je pacijent s imenom: {}", patient.getName());
         patient.addDoctor(doctors[doctorSelection]);
         doctors[doctorSelection-1].addPatient(patient);
         rooms[roomSelection-1].addPatient(patient);
