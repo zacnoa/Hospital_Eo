@@ -5,6 +5,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
 
+/**
+ * Predstavlja pacijenta
+ */
+
 public final class Patient extends Person {
     private Doctor doctor;
     private String diagnosis;
@@ -12,15 +16,26 @@ public final class Patient extends Person {
 
     private final static Logger logger= LoggerFactory.getLogger(Patient.class);
 
+    /**
+     *
+     * @return doktora
+     */
     public Doctor getDoctor() {
         return doctor;
     }
 
-
+    /**
+     *
+     * @return  diagnozu
+     */
     public String getDiagnosis() {
         return diagnosis;
     }
 
+    /**
+     *
+     * @return Id
+     */
     public Integer getId() {
         return id;
     }
@@ -33,13 +48,17 @@ public final class Patient extends Person {
 
 
 
-
-    public Patient(PatientBuilder patientBuilder) {
+     private Patient(PatientBuilder patientBuilder) {
         super(patientBuilder.name,patientBuilder.OIB);
         this.diagnosis = patientBuilder.diagnosis;
         this.id=patientBuilder.id;
     }
 
+    /**
+     *
+     * @param sc Inicijalizirani Scanner objekt
+     * @return inicijalizirani Patient objekt
+     */
     public static Patient generatePatient(Scanner sc){
 
         System.out.println("Unesite ime pacijenta");
@@ -56,10 +75,17 @@ public final class Patient extends Person {
         return patient;
     }
 
+    /**
+     *
+     * @param doctor doktor
+     */
     public void addDoctor(Doctor doctor){
         this.doctor=doctor;
     }
 
+    /**
+     * PatternBuilde za klasu Patient
+     */
     public static class PatientBuilder{
         String name;
         String OIB;
@@ -68,6 +94,12 @@ public final class Patient extends Person {
 
         Doctor doctor=null;
 
+        /**
+         *
+         * @param name Ime
+         * @param OIB OIB
+         * @param diagnosis Diagnoza
+         */
         public PatientBuilder(String name,String OIB,String diagnosis){
             this.name=name;
             this.OIB=OIB;
@@ -75,11 +107,20 @@ public final class Patient extends Person {
 
         }
 
-
+        /**
+         *
+         * @param doctor doktor
+         * @return referncu na ovaj objekt
+         */
         public PatientBuilder doctor(Doctor doctor){
             this.doctor=doctor;
             return this;
         }
+
+        /**
+         *
+         * @return inicijalizirani objekt Patient
+         */
         public Patient build()
         {
             return new Patient(this);

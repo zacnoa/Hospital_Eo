@@ -1,16 +1,23 @@
 package Main;
 
 import entity.Department;
-import entity.ArrayException;
+import entity.PersonnelException;
 import entity.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
 
+/**
+ * Klasa za pokretanje programa
+ */
 
 public class Main {
 
+    /**
+     * metoda za pokretanje programa
+     * @param args argumenti
+     */
     static void main(String[] args) {
 
 
@@ -120,7 +127,7 @@ public class Main {
                                                 logger.error(e.getMessage(),e);
                                                 System.out.println(e.getMessage());
                                             }
-                                            catch(ArrayException e)
+                                            catch(PersonnelException e)
                                             {
                                                 logger.error(e.getMessage(),e);
                                                 System.out.println(e.getMessage());

@@ -7,6 +7,12 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 
+/**
+ * Predstavlja odjel u bolnici
+ *
+ * Klasa omogucava baratnje odjelima te pripadajucim doktorima,pacijentima, te uputnicama
+ */
+
 public class Department {
 
     private String name;
@@ -21,7 +27,6 @@ public class Department {
 
 
 
-
     public Department(String name) {
         this.name = name;
         this.doctors = new Doctor[10];
@@ -33,32 +38,40 @@ public class Department {
         this.appoitnmentCount=0;
     }
 
-    public int getDoctorCount() {
-        return doctorCount;
-    }
 
-    public int getRoomCount() {
-        return roomCount;
-    }
-
-    public Room[] getRooms() {
-        return rooms;
-    }
-
+    /**
+     * Vraca polje doktora
+     * @return Volje doktora odjela
+     */
     public Doctor[] getDoctor() {
         return doctors;
     }
 
+    /**
+     *  Vraca ime odjela
+     * @return Ime odjela
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *  Inicijalizira doktora te ga dodaje polju doctors
+     * @param sc Inicijalizirani Scanner object
+     * @throws IllegalArgumentException Biti će bacena ako se unese prazno ime
+     */
     public  void addDoctor(Scanner sc) throws IllegalArgumentException
     {
         doctors[doctorCount]= Doctor.generateDoctor(sc);
         doctorCount++;
     }
 
+    /**
+     * Stvara novi objekt tipa Department
+     * @param sc Inicijalizirani Scanner object
+     * @return Inicijalzirani odjel objekt
+     * @throws IllegalArgumentException Biti će bacena ako se unese prazno ime
+     */
     public static Department generateDepartment(Scanner sc) throws IllegalArgumentException
     {
         System.out.println("Upišite ime novog Odjela:");
@@ -72,15 +85,21 @@ public class Department {
         return new Department(name);
     }
 
-    public void addPatient(Scanner sc) throws IndexOutOfBoundsException , ArrayException
+    /**
+     * Stvara novi pacijent objekt te ga dodaje polju patients
+     * @param sc Inicijalizirani Scanner object
+     * @throws IndexOutOfBoundsException Biti ce baceno ako se izabere krivi index za doktora ili sobu
+     * @throws PersonnelException Biti ce bacena ako se pokusa stvoriti pacijent dok ne postoji doktora ili soba
+     */
+    public void addPatient(Scanner sc) throws IndexOutOfBoundsException , PersonnelException
     {
         if(doctorCount==0)
         {
-            throw  new ArrayException("Ne postoji doktor za zbrijnjavanje pacijenta");
+            throw  new PersonnelException("Ne postoji doktor za zbrijnjavanje pacijenta");
         }
         else if(roomCount==0)
         {
-            throw new ArrayException("Ne postoji soba za smještaj pacijenta");
+            throw new PersonnelException("Ne postoji soba za smještaj pacijenta");
         }
         Patient patient =Patient.generatePatient(sc);
         System.out.println("Izaberite redni broj pored doktora koji je odgovoran za tog pacijenta:");
@@ -118,18 +137,19 @@ public class Department {
 
     }
 
-
-
-
+    /**
+     * Dodaje sobu odjelu
+     */
     public void addRoom()
     {
         rooms[roomCount]=new Room(++roomCount);
     }
 
 
-
-
-
+    /**
+     * Stvara novu uputnicu
+     * @param sc Inicijalizirani Scanner objekt
+     */
     public void addAppointment(Scanner sc)
     {
         System.out.println("Izaberite redni broj pored pacijenta za kojeg radite uputnicu:");
@@ -148,9 +168,9 @@ public class Department {
     }
 
 
-
-
-
+    /**
+     * Printa sve uputnice za odjel
+     */
     public void printAppointments()
     {
         for(Integer i=0;i<appoitnmentCount;i++)
@@ -160,8 +180,11 @@ public class Department {
     }
 
 
-
-
+    /**
+     *  Trazi doktora po specijalizaciji
+     * @param sc Inicijalizirani Scanner objekt
+     * @return Pronadeni doktor ako postoji ili null ako ne postoji
+     */
     public Doctor doctorSearchBySpecialty(Scanner sc){
         System.out.println("Unesite traženu specijalizaciju dokotora");
 
@@ -178,8 +201,11 @@ public class Department {
     }
 
 
-
-
+    /**
+     * Trazi pacijenta po njegovoj diagnozi
+     * @param sc Inicijalizirani Scanner objekt
+     * @return Pronadenog pacijenta ako postoji ili null ako ne postoji
+     */
     public Patient patientSearchByDiagnosis(Scanner sc){
         System.out.println("Unesite traženu dijagnozu");
         String diagnosis=sc.nextLine();

@@ -1,13 +1,18 @@
 package entity;
 
-import java.util.Scanner;
 
+/**
+ * Predstavlja sobu
+ */
 public class Room {
     private Integer patientCount;
     private Patient[] patients;
     private Integer id;
 
-
+    /**
+     *
+     * @param id Id sobe
+     */
     public Room(Integer id)
     {
         this.id=id;
@@ -15,6 +20,10 @@ public class Room {
         patients = new Patient[10];
     }
 
+    /**
+     *
+     * @return Id
+     */
     public Integer getId() {
         return id;
     }
@@ -24,11 +33,18 @@ public class Room {
         return patientCount;
     }
 
-
+    /**
+     *
+     * @return Polje pacijenata
+     */
     public Patient[] getPatients() {
         return patients;
     }
 
+    /**
+     *  Dodaje pacijenta u sobu
+     * @param patient pacijent
+     */
     public void addPatient(Patient patient) {
         this.patients[patientCount++] = patient;
     }

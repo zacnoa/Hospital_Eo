@@ -29,7 +29,7 @@ java.lang.IllegalArgumentException: Ime odjela nemože bit prazno
 2025-11-02 20:57:38,645 INFO [main] e.Patient [Patient.java:57] Stvoren je pacijent imena: 
 2025-11-02 20:59:44,677 INFO [main] e.Department [Department.java:70] Stvoren je odjel sa imenom: Neuro
 2025-11-02 20:59:47,620 ERROR [main] Main.Main [Main.java:113] Ne postoji doktor za zbrijnjavanje pacijenta
-entity.ArrayException: Ne postoji doktor za zbrijnjavanje pacijenta
+entity.PersonnelException: Ne postoji doktor za zbrijnjavanje pacijenta
 	at entity.Department.addPatient(Department.java:78)
 	at Main.Main.main(Main.java:104)
 2025-11-02 21:00:02,018 INFO [main] e.Doctor [Doctor.java:55] Stvoren je doktor s imenom: adsf
