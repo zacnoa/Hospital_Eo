@@ -3,18 +3,20 @@ package entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
- * Predstvja doktora
+ * Predstavja doktora
  * Klasa omogucava upravaljanje doktora i njegovih pacijenta
- * @u
+ *
  */
 
 public final class Doctor extends Person implements PrintableArray {
     private String specialty;
-    private Patient[] patients;
-    private Integer patientCount;
+    private List<Patient> patients;
+
 
     private final static Logger logger= LoggerFactory.getLogger(Doctor.class);
 
@@ -23,7 +25,6 @@ public final class Doctor extends Person implements PrintableArray {
         super(doctorBuilder.name,doctorBuilder.OIB);
         this.specialty=doctorBuilder.specialty;
         this.patients=doctorBuilder.patients;
-        this.patientCount=doctorBuilder.patientCount;
 
     }
 
@@ -40,7 +41,7 @@ public final class Doctor extends Person implements PrintableArray {
      * @param patient Dodaje objekt tipa Patient u polje patients
      */
     public void addPatient(Patient patient){
-        patients[patientCount++]= patient;
+        patients.add(patient);
     }
 
 
@@ -48,8 +49,8 @@ public final class Doctor extends Person implements PrintableArray {
     @Override
     public void print(){
         System.out.println(super.getName() + ": " + specialty);
-        for(int i=0;i<patientCount;i++){
-            System.out.println((i+1) + ".) " + patients[i].getName() );
+        for(int i=0;i<patients.size();i++){
+            System.out.println((i+1) + ".) " + patients.get(i).getName() );
         }
     }
 
@@ -97,8 +98,7 @@ public final class Doctor extends Person implements PrintableArray {
         private String OIB;
         private String specialty;
 
-        private Patient[] patients=new Patient[1];
-        private Integer patientCount=0;
+        private  List<Patient> patients=new ArrayList<>();
 
         /**
          *
@@ -117,14 +117,8 @@ public final class Doctor extends Person implements PrintableArray {
          * @param patients polje pacijenata
          * @return Referncu na trenutni objekt
          */
-        public DoctorBuilder patients(Patient[] patients){
+        public DoctorBuilder patients(List<Patient> patients){
             this.patients=patients;
-            return this;
-        }
-
-
-        public DoctorBuilder patientCount(Integer patientCount){
-            this.patientCount= patientCount;
             return this;
         }
 

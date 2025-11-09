@@ -6,6 +6,8 @@ import entity.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -28,8 +30,8 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Dobro došli u našu bolnicu!!\nMolimo vas popunite našu evidenciju.");
-        Department[] departments= new  Department[10];
-        Integer departmentCount=0;
+        List<Department> departments = new ArrayList<>();
+        departments.add(Department.generateDepartment(sc));
 
 
 
@@ -59,8 +61,7 @@ public class Main {
                     do {
                         failedFlag = false;
                         try {
-                            departments[departmentCount] = Department.generateDepartment(sc);
-                            departmentCount++;
+                            departments.add(Department.generateDepartment(sc));
                         }
                         catch (IllegalArgumentException e) {
                             failedFlag=true;
@@ -75,8 +76,8 @@ public class Main {
                     String secondCommand;
                     do {
                         System.out.println("Izaberite redni broj pored odjela kojemu zelite pristupiti (ili X za natrag:)");
-                        for (Integer i = 0; i < departmentCount; i++) {
-                            System.out.println((i + 1) + ".) " + departments[i].getName());
+                        for (Integer i = 0; i < departments.size(); i++) {
+                            System.out.println((i + 1) + ".) " + departments.get(i).getName());
                         }
                         System.out.println("X.) Kraj");
                         secondCommand = sc.nextLine();
@@ -84,6 +85,7 @@ public class Main {
 
                         if(!"X".equalsIgnoreCase(secondCommand)) {
                             Integer izabraniOdjel= Integer.parseInt(secondCommand);
+                            izabraniOdjel--;
                             String thirdCommand;
                             do {
                                 System.out.println("""
@@ -106,7 +108,7 @@ public class Main {
                                         do {
                                             failedFlag = false;
                                             try {
-                                                departments[izabraniOdjel - 1].addDoctor(sc);
+                                                departments.get(izabraniOdjel).addDoctor(sc);
                                             }catch(IllegalArgumentException e)
                                             {
                                                 System.out.println(e.getMessage());
@@ -120,7 +122,7 @@ public class Main {
                                         do {
                                             failedFlag=false;
                                             try {
-                                                departments[izabraniOdjel - 1].addPatient(sc);
+                                                departments.get(izabraniOdjel).addPatient(sc);
                                             }
                                             catch (IndexOutOfBoundsException e) {
                                                 failedFlag=true;
@@ -135,19 +137,19 @@ public class Main {
                                         }while(failedFlag);
                                     }
                                     case "3" ->{
-                                        departments[izabraniOdjel - 1].addRoom();
+                                        departments.get(izabraniOdjel).addRoom();
                                     }
                                     case "4"->{
-                                        departments[izabraniOdjel - 1].doctorSearchBySpecialty(sc);
+                                        departments.get(izabraniOdjel).doctorSearchBySpecialty(sc);
                                     }
                                     case "5"->{
-                                        departments[izabraniOdjel-1].patientSearchByDiagnosis(sc);
+                                        departments.get(izabraniOdjel).patientSearchByDiagnosis(sc);
                                     }
                                     case "6"->{
-                                        departments[izabraniOdjel-1].addAppointment(sc);
+                                        System.out.println("Feature deleted");
                                     }
                                     case "7"->{
-                                        departments[izabraniOdjel-1].printAppointments();
+                                        departments.get(izabraniOdjel).printAppointments();
                                     }
 
                                 }

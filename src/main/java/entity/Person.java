@@ -1,6 +1,10 @@
 package entity;
 
 
+import java.util.Comparator;
+import java.util.SequencedSet;
+import java.util.TreeSet;
+
 /**
  * Predstavlja osobu
  * Omogucuje obradu osobnih informacije osobe
@@ -8,25 +12,15 @@ package entity;
 public abstract class Person {
     private String name;
     private String OIB;
+    public static SequencedSet<Person> allPersons=new TreeSet<>(Comparator.comparing(Person::getName).thenComparing(Person::getOIB));
 
-    static Person[] allPersons =new Person[100];
-    static Integer personCount=0;
 
     /**
      * Ispisuje staticno polje allPersons
      */
     public static void printAllPersons(){
-        for(int i=0;i<personCount;i++){
-            if(allPersons[i] instanceof Doctor doctor)
-            {
 
-                doctor.basicInformation();
-            }
-            else if(allPersons[i] instanceof Patient patient)
-            {
-                patient.basicInformation();
-            }
-        }
+        allPersons.forEach(Person::basicInformation);
     }
 
     /**
@@ -34,7 +28,7 @@ public abstract class Person {
      * @param person Osoba
      */
     static void addPerson(Person person){
-        allPersons[personCount++]= person;
+        allPersons.add(person);
     }
 
     /**

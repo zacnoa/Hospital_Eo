@@ -101,3 +101,12 @@ java.lang.IndexOutOfBoundsException: Unesen je redni broj sobe koja ne postoji
 	at entity.Department.addPatient(Department.java:109)
 	at Main.Main.main(Main.java:116)
 2025-11-03 16:09:28,666 INFO [main] e.Patient [Patient.java:57] Stvoren je pacijent imena: adsf
+2025-11-08 18:16:31,647 INFO [main] e.Department [Department.java:77] Stvoren je odjel sa imenom: neuro
+2025-11-08 18:16:49,211 INFO [main] e.Doctor [Doctor.java:81] Stvoren je doktor s imenom: Ivan Ivanovic
+2025-11-08 18:17:50,329 INFO [main] e.Department [Department.java:120] Kreiran je pacijent s imenom: luka Luka
+2025-11-08 18:21:43,384 INFO [main] e.Department [Department.java:77] Stvoren je odjel sa imenom: NEUR
+2025-11-08 18:21:55,993 INFO [main] e.Doctor [Doctor.java:82] Stvoren je doktor s imenom: safisad
+2025-11-08 18:22:06,852 INFO [main] e.Doctor [Doctor.java:82] Stvoren je doktor s imenom: Ivan I
+2025-11-08 18:22:23,147 INFO [main] e.Department [Department.java:120] Kreiran je pacijent s imenom: ivan
+2025-11-08 18:22:35,692 INFO [main] e.Department [Department.java:120] Kreiran je pacijent s imenom: asfd
+2025-11-08 18:22:47,107 INFO [main] e.Department [Department.java:120] Kreiran je pacijent s imenom: dasfsd

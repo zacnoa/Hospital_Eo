@@ -13,6 +13,7 @@ public final class Patient extends Person {
     private Doctor doctor;
     private String diagnosis;
     private Integer id;
+    public PatientStatus status;
 
     private final static Logger logger= LoggerFactory.getLogger(Patient.class);
 
@@ -47,11 +48,16 @@ public final class Patient extends Person {
     }
 
 
-
-     private Patient(PatientBuilder patientBuilder) {
+    /**
+     *
+     *
+     * @param patientBuilder patientBuilder
+     */
+    private Patient(PatientBuilder patientBuilder) {
         super(patientBuilder.name,patientBuilder.OIB);
         this.diagnosis = patientBuilder.diagnosis;
         this.id=patientBuilder.id;
+        this.status=patientBuilder.status;
     }
 
     /**
@@ -70,7 +76,7 @@ public final class Patient extends Person {
         System.out.println("Unesite dijagnozu  pacijenta");
         String dijagnoza=sc.nextLine();
 
-        Patient patient=new Patient.PatientBuilder(ime,oib,dijagnoza).build();
+        Patient patient=new Patient.PatientBuilder(ime,oib,dijagnoza,PatientStatus.HOSPITALIZED).build();
 
         return patient;
     }
@@ -84,13 +90,14 @@ public final class Patient extends Person {
     }
 
     /**
-     * PatternBuilde za klasu Patient
+     * PatternBuilder za klasu Patient
      */
     public static class PatientBuilder{
         String name;
         String OIB;
         String diagnosis;
         Integer id;
+        PatientStatus status;
 
         Doctor doctor=null;
 
@@ -98,12 +105,14 @@ public final class Patient extends Person {
          *
          * @param name Ime
          * @param OIB OIB
-         * @param diagnosis Diagnoza
+         * @param diagnosis Dijagnoza
+         * @param status status
          */
-        public PatientBuilder(String name,String OIB,String diagnosis){
+        public PatientBuilder(String name,String OIB,String diagnosis,PatientStatus status){
             this.name=name;
             this.OIB=OIB;
             this.diagnosis=diagnosis;
+            this.status=status;
 
         }
 

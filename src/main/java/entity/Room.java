@@ -1,12 +1,16 @@
 package entity;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Predstavlja sobu
  */
 public class Room {
-    private Integer patientCount;
-    private Patient[] patients;
+    protected Map<String, List<Patient>> patients;
     private Integer id;
 
     /**
@@ -16,8 +20,7 @@ public class Room {
     public Room(Integer id)
     {
         this.id=id;
-        this.patientCount =0;
-        patients = new Patient[10];
+        patients =new HashMap<>();
     }
 
     /**
@@ -29,15 +32,13 @@ public class Room {
     }
 
 
-    public Integer getPatientCount() {
-        return patientCount;
-    }
+
 
     /**
      *
      * @return Polje pacijenata
      */
-    public Patient[] getPatients() {
+    public Map<String,List<Patient>> getPatients() {
         return patients;
     }
 
@@ -46,7 +47,16 @@ public class Room {
      * @param patient pacijent
      */
     public void addPatient(Patient patient) {
-        this.patients[patientCount++] = patient;
+        if(patients.containsKey(patient.getDiagnosis()))
+        {
+            patients.get(patient.getDiagnosis()).add(patient);
+        }
+        else
+        {
+            List<Patient> list=new ArrayList<>();
+            list.add(patient);
+            patients.put(patient.getDiagnosis(),list);
+        }
     }
 
 
