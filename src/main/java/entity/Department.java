@@ -3,8 +3,8 @@ package entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -13,7 +13,7 @@ import java.util.*;
  * Klasa omogucava baratnje odjelima te pripadajucim doktorima,pacijentima, te uputnicama
  */
 
-public class Department {
+ non-sealed public class Department implements PrintableMenuSelection  {
 
     private String name;
     private List<Doctor> doctors;
@@ -93,9 +93,8 @@ public class Department {
         }
         Patient patient = Patient.generatePatient(sc);
         System.out.println("Izaberite redni broj pored doktora koji je odgovoran za tog pacijenta:");
-        for (Integer i = 0; i < doctors.size(); i++) {
-            System.out.println(i + 1 + ".) " + doctors.get(i).getName());
-        }
+        Utility.printMenuSelection(doctors);
+
         Integer doctorSelection = sc.nextInt();
         sc.skip("\n");
 
@@ -105,9 +104,7 @@ public class Department {
         }
 
         System.out.println("Izaberite redni broj pored sobe gdje ce se nalaziti  pacijent:");
-        for (Integer i = 0; i < rooms.size(); i++) {
-            System.out.println(i + 1 + ".)" + rooms.get(i).getId());
-        }
+        Utility.printMenuSelection(rooms);
 
         Integer roomSelection = sc.nextInt();
         sc.skip("\n");
@@ -150,8 +147,8 @@ public class Department {
      */
     public List<Doctor> doctorSearchBySpecialty(Scanner sc) {
         System.out.println("Unesite trazenu specijalizaciju");
-        String diagnosis = sc.nextLine();
-        return doctors.stream().filter(doctor->diagnosis.equals(doctor.getSpecialty())).toList();
+        String specialty = sc.nextLine();
+        return doctors.stream().filter(doctor->specialty.equals(doctor.getSpecialty())).toList();
     }
 
 
@@ -167,7 +164,37 @@ public class Department {
 
          return rooms.stream().filter(room->room.patients.containsKey(diagnosis))
                         .flatMap(room-> room.patients.get(diagnosis).stream()).toList();
+
     }
+    public Integer patientCount()
+    {
+        Integer count=0;
+        rooms.stream().reduce(count, (partialCount,room)->partialCount+room.patients.size(),Integer::sum);
+        return count;
+    }
+
+    public Map<String,List<Patient>> groupByDoctor()
+    {
+        Map<String, List<Patient>> map =
+                rooms.stream()
+                        .flatMap(room -> room.getPatients().values().stream())
+                        .flatMap(List::stream) // jer je values() map -> Collection<List<Patient>>
+                        .collect(Collectors.groupingBy(
+                                patient -> patient.getDoctor().get().getName()
+                        ));
+
+        return map;
+    }
+
+    @Override
+    public String getSelectionLine()
+    {
+        return name;
+    }
+
+
+
+
 }
 
 

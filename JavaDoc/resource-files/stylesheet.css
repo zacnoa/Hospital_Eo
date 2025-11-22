@@ -1658,7 +1658,7 @@ pre.snippet .highlighted {
     border-radius: 10%;
 }
 /*
- * Hide navigation links and search box in print layout
+ * Hide navigation links and search box in printMenuSelection layout
  */
 @media print {
     ul.nav-list, div.sub-nav, .main-grid nav.toc, button.copy {

@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Predstavlja sobu
  */
-public class Room {
+non-sealed public class Room implements PrintableMenuSelection {
     protected Map<String, List<Patient>> patients;
     private Integer id;
 
@@ -19,7 +19,7 @@ public class Room {
      */
     public Room(Integer id)
     {
-        this.id=id;
+        this.id =id;
         patients =new HashMap<>();
     }
 
@@ -30,8 +30,6 @@ public class Room {
     public Integer getId() {
         return id;
     }
-
-
 
 
     /**
@@ -59,5 +57,9 @@ public class Room {
         }
     }
 
-
+    @Override
+    public String getSelectionLine()
+    {
+        return Integer.toString(this.id);
+    }
 }

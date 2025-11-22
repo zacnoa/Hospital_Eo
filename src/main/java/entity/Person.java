@@ -1,9 +1,7 @@
 package entity;
 
 
-import java.util.Comparator;
-import java.util.SequencedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Predstavlja osobu
@@ -56,6 +54,23 @@ public abstract class Person {
     Person(String name, String OIB) {
         this.name=name;
         this.OIB=OIB;
+    }
+
+    static Map<String,String> getBasicInfo(Scanner sc)
+    {
+        Map<String,String> map=new HashMap<>();
+
+        System.out.println("Unesite ime osobe");
+        String ime=sc.nextLine();
+
+        System.out.println("Unesite OIB osobe:");
+        String oib=sc.nextLine();
+
+        map.put("ime",ime);
+        map.put("oib",oib);
+
+        return map;
+
     }
 
     /**

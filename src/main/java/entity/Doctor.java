@@ -13,7 +13,7 @@ import java.util.Scanner;
  *
  */
 
-public final class Doctor extends Person implements PrintableArray {
+public final class Doctor extends Employee implements PrintableMenuSelection {
     private String specialty;
     private List<Patient> patients;
 
@@ -22,7 +22,7 @@ public final class Doctor extends Person implements PrintableArray {
 
 
     private Doctor(DoctorBuilder doctorBuilder) {
-        super(doctorBuilder.name,doctorBuilder.OIB);
+        super(doctorBuilder.name,doctorBuilder.OIB,doctorBuilder.salary);
         this.specialty=doctorBuilder.specialty;
         this.patients=doctorBuilder.patients;
 
@@ -47,12 +47,11 @@ public final class Doctor extends Person implements PrintableArray {
 
 
     @Override
-    public void print(){
-        System.out.println(super.getName() + ": " + specialty);
-        for(int i=0;i<patients.size();i++){
-            System.out.println((i+1) + ".) " + patients.get(i).getName() );
-        }
+    public String getSelectionLine()
+    {
+        return super.getName();
     }
+
 
     /**
      *
@@ -75,7 +74,10 @@ public final class Doctor extends Person implements PrintableArray {
             System.out.println("Unesite specijalizaciju doktora:");
             String specialty = sc.nextLine();
 
-            Doctor doctor = new Doctor.DoctorBuilder(name, OIB, specialty).build();
+            System.out.println("Unesite placu doktora:");
+            Double  salary = sc.nextDouble();
+
+            Doctor doctor = new Doctor.DoctorBuilder(name, OIB, specialty, salary).build();
 
 
         Person.addPerson(doctor);
@@ -97,16 +99,18 @@ public final class Doctor extends Person implements PrintableArray {
         private String name;
         private String OIB;
         private String specialty;
+        private Double salary;
 
         private  List<Patient> patients=new ArrayList<>();
 
         /**
          *
-         * @param name Ime doktora
-         * @param OIB OIB doktora
+         * @param name      Ime doktora
+         * @param OIB       OIB doktora
          * @param specialty Specijalizacija doktora
+         * @param salary   placa doktora
          */
-        public DoctorBuilder(String name, String OIB, String specialty) {
+        public DoctorBuilder(String name, String OIB, String specialty,Double salary) {
             this.name=name;
             this.OIB=OIB;
             this.specialty=specialty;

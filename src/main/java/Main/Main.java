@@ -1,8 +1,6 @@
 package Main;
 
-import entity.Department;
-import entity.PersonnelException;
-import entity.Person;
+import entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,14 +30,7 @@ public class Main {
         System.out.println("Dobro došli u našu bolnicu!!\nMolimo vas popunite našu evidenciju.");
         List<Department> departments = new ArrayList<>();
         departments.add(Department.generateDepartment(sc));
-
-
-
-
-
-
-
-
+        EmergencyRoom emergencyRoom=new EmergencyRoom();
 
 
 
@@ -76,9 +67,7 @@ public class Main {
                     String secondCommand;
                     do {
                         System.out.println("Izaberite redni broj pored odjela kojemu zelite pristupiti (ili X za natrag:)");
-                        for (Integer i = 0; i < departments.size(); i++) {
-                            System.out.println((i + 1) + ".) " + departments.get(i).getName());
-                        }
+                        Utility.printMenuSelection(departments);
                         System.out.println("X.) Kraj");
                         secondCommand = sc.nextLine();
 
@@ -164,11 +153,9 @@ public class Main {
             }
         }while(!"X".equalsIgnoreCase(mainCommand));
 
-
-
-
-
     }
+
+
 }
 
 
