@@ -110,3 +110,6 @@ java.lang.IndexOutOfBoundsException: Unesen je redni broj sobe koja ne postoji
 2025-11-08 18:22:23,147 INFO [main] e.Department [Department.java:120] Kreiran je pacijent s imenom: ivan
 2025-11-08 18:22:35,692 INFO [main] e.Department [Department.java:120] Kreiran je pacijent s imenom: asfd
 2025-11-08 18:22:47,107 INFO [main] e.Department [Department.java:120] Kreiran je pacijent s imenom: dasfsd
+2025-11-09 15:58:42,674 INFO [main] e.Department [Department.java:77] Stvoren je odjel sa imenom: jf
+2025-11-09 15:58:59,953 INFO [main] e.Department [Department.java:77] Stvoren je odjel sa imenom: kmk
+2025-11-09 15:59:12,897 INFO [main] e.Doctor [Doctor.java:87] Stvoren je doktor s imenom: dafdas

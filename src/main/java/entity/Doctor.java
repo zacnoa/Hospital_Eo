@@ -13,7 +13,7 @@ import java.util.Scanner;
  *
  */
 
-public final class Doctor extends Employee implements PrintableMenuSelection {
+public final class Doctor extends Person implements PrintableMenuSelection {
     private String specialty;
     private List<Patient> patients;
 
@@ -22,7 +22,7 @@ public final class Doctor extends Employee implements PrintableMenuSelection {
 
 
     private Doctor(DoctorBuilder doctorBuilder) {
-        super(doctorBuilder.name,doctorBuilder.OIB,doctorBuilder.salary);
+        super(doctorBuilder.name,doctorBuilder.OIB);
         this.specialty=doctorBuilder.specialty;
         this.patients=doctorBuilder.patients;
 
@@ -46,13 +46,6 @@ public final class Doctor extends Employee implements PrintableMenuSelection {
 
 
 
-    @Override
-    public String getSelectionLine()
-    {
-        return super.getName();
-    }
-
-
     /**
      *
      * @param sc Inicijalizirani Scanner objekt
@@ -74,10 +67,7 @@ public final class Doctor extends Employee implements PrintableMenuSelection {
             System.out.println("Unesite specijalizaciju doktora:");
             String specialty = sc.nextLine();
 
-            System.out.println("Unesite placu doktora:");
-            Double  salary = sc.nextDouble();
-
-            Doctor doctor = new Doctor.DoctorBuilder(name, OIB, specialty, salary).build();
+            Doctor doctor = new Doctor.DoctorBuilder(name, OIB, specialty).build();
 
 
         Person.addPerson(doctor);
@@ -92,6 +82,11 @@ public final class Doctor extends Employee implements PrintableMenuSelection {
         System.out.println("Doktor:"+ super.getName() +" specijalizacija doktora: " + specialty);
     }
 
+    @Override
+    public String getSelectionLine() {
+        return super.getName();
+    }
+
     /**
      * BuilderPattern za klasu doktor
      */
@@ -99,18 +94,16 @@ public final class Doctor extends Employee implements PrintableMenuSelection {
         private String name;
         private String OIB;
         private String specialty;
-        private Double salary;
 
         private  List<Patient> patients=new ArrayList<>();
 
         /**
          *
-         * @param name      Ime doktora
-         * @param OIB       OIB doktora
+         * @param name Ime doktora
+         * @param OIB OIB doktora
          * @param specialty Specijalizacija doktora
-         * @param salary   placa doktora
          */
-        public DoctorBuilder(String name, String OIB, String specialty,Double salary) {
+        public DoctorBuilder(String name, String OIB, String specialty) {
             this.name=name;
             this.OIB=OIB;
             this.specialty=specialty;
