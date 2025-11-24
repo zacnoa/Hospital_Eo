@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class EmergencyRoom {
 
-    private List<ERPatient> patients;
+    protected static List<Patient> patients;
     private Set<Doctor> doctors;
 
     public EmergencyRoom()
@@ -16,7 +16,7 @@ public class EmergencyRoom {
         doctors = new HashSet<>();
     }
 
-    public List<ERPatient> getPatients() {
+    public List<Patient> getPatients() {
         return patients;
     }
 

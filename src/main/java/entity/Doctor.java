@@ -76,6 +76,7 @@ public final class Doctor extends Employee implements PrintableMenuSelection {
 
             System.out.println("Unesite placu doktora:");
             Double  salary = sc.nextDouble();
+            sc.skip("\n");
 
             Doctor doctor = new Doctor.DoctorBuilder(name, OIB, specialty, salary).build();
 

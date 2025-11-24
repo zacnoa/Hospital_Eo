@@ -3,7 +3,6 @@ package entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
@@ -18,6 +17,7 @@ public  class Patient extends Person {
     private String diagnosis;
     private Integer id;
     public PatientStatus status;
+    private Optional<Room> room;
 
     private final static Logger logger= LoggerFactory.getLogger(Patient.class);
 
@@ -44,6 +44,18 @@ public  class Patient extends Person {
     public Integer getId() {
         return id;
     }
+
+
+    public void setRoom(Room room) {
+        this.room =Optional.of(room);
+    }
+    public Optional<Room> getRoom()
+    {
+        return room;
+    }
+
+
+
 
     @Override
     public void basicInformation()
@@ -80,6 +92,7 @@ public  class Patient extends Person {
     {
         System.out.println("Unesite dijagnozu  pacijenta");
         String dijagnoza=sc.nextLine();
+        return dijagnoza;
     }
 
 
@@ -90,7 +103,16 @@ public  class Patient extends Person {
      */
     public static Patient generatePatient(Scanner sc){
 
-
+        System.out.println("""
+                Da li je pacijent maloljetan(Izaberite redni broj)
+                1.)Da
+                2.)Ne
+                """
+        );
+        if("1".equals(sc.nextLine()))
+        {
+            return  UnderagePatient.generateUnderagePatient(sc);
+        }
         Map<String,String> map=getBasicInfo(sc);
         Patient patient=new Patient.PatientBuilder(map.get("ime"), map.get("oib"),map.get("dijagnoza"), PatientStatus.HOSPITALIZED).build();
 
@@ -101,7 +123,7 @@ public  class Patient extends Person {
      *
      * @param doctor doktor
      */
-    public void addDoctor(Doctor doctor){
+    public void setDoctor(Doctor doctor){
         this.doctor= Optional.of(doctor);
     }
 
@@ -116,6 +138,7 @@ public  class Patient extends Person {
         PatientStatus status;
 
         Optional<Doctor> doctor;
+        Optional<Room> room;
 
         /**
          *
@@ -141,6 +164,12 @@ public  class Patient extends Person {
             this.doctor=doctor;
             return (T) this;
         }
+        public T room(Optional<Room> room)
+        {
+            this.room=room;
+            return (T) this;
+        }
+
 
         /**
          *

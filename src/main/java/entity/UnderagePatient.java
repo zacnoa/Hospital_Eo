@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class UnderagePatient extends Patient{
-    private Optional<Person> legalGuardian;
+    private Optional<Visitor> legalGuardian;
 
    @Override
    public void basicInformation()
@@ -20,29 +20,31 @@ public class UnderagePatient extends Patient{
         this.legalGuardian=builder.legalGuardian;
     }
 
-//    public static Person generateLegalGuardian(Scanner sc)
-//    {
-//        Map<String,String> map=Person.getBasicInfo(sc);
-//        return new
-//    }
-//
-//    public  UnderagePatient generateUnderagePatient(Scanner sc)
-//    {
-//        Patient.getBasicInfo(sc);
-//
-//    }
+    public static Visitor generateLegalGuardian(Scanner sc)
+    {
+        Map<String,String> map=Person.getBasicInfo(sc);
+        return new  Visitor(map.get("ime"),map.get("oib"));
+    }
+
+    public static  UnderagePatient generateUnderagePatient(Scanner sc)
+    {
+        Map<String,String> map=Patient.getBasicInfo(sc);
+        return new UnderagePatientBuilder(map.get("ime"),map.get("oib"),map.get("dijagnoza"),PatientStatus.HOSPITALIZED)
+                .legalGuardian(generateLegalGuardian(sc)).build();
+
+    }
 
 
 
 
 
-    public Optional<Person> getLegalGuardian() {
+    public Optional<Visitor> getLegalGuardian() {
         return legalGuardian;
     }
 
     public static class UnderagePatientBuilder extends PatientBuilder<UnderagePatientBuilder>
     {
-         Optional<Person> legalGuardian;
+         Optional<Visitor> legalGuardian;
 
 
         UnderagePatientBuilder(String name,String OIB,String diagnosis,PatientStatus status)
@@ -50,7 +52,7 @@ public class UnderagePatient extends Patient{
             super(name,OIB,diagnosis,status);
         }
 
-         UnderagePatientBuilder legalGuardian(Person legalGuardian)
+         UnderagePatientBuilder legalGuardian(Visitor legalGuardian)
          {
              this.legalGuardian=Optional.of(legalGuardian);
              return this;

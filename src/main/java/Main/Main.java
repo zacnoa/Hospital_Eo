@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,6 +13,7 @@ import java.util.Scanner;
  * Klasa za pokretanje programa
  */
 
+//dodaj Exception handling za sve stvari(praznici)
 public class Main {
 
     /**
@@ -28,9 +30,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Dobro došli u našu bolnicu!!\nMolimo vas popunite našu evidenciju.");
-        List<Department> departments = new ArrayList<>();
-        departments.add(Department.generateDepartment(sc));
-        EmergencyRoom emergencyRoom=new EmergencyRoom();
+        DepartmentStorage.addDepartment(sc);
 
 
 
@@ -52,7 +52,7 @@ public class Main {
                     do {
                         failedFlag = false;
                         try {
-                            departments.add(Department.generateDepartment(sc));
+                            DepartmentStorage.addDepartment(sc);
                         }
                         catch (IllegalArgumentException e) {
                             failedFlag=true;
@@ -65,84 +65,15 @@ public class Main {
                 }
                 case "2" -> {
                     String secondCommand;
+
                     do {
-                        System.out.println("Izaberite redni broj pored odjela kojemu zelite pristupiti (ili X za natrag:)");
-                        Utility.printMenuSelection(departments);
-                        System.out.println("X.) Kraj");
+                        Utility.printMenuSelection(DepartmentStorage.departments);
                         secondCommand = sc.nextLine();
-
-
-                        if(!"X".equalsIgnoreCase(secondCommand)) {
-                            Integer izabraniOdjel= Integer.parseInt(secondCommand);
+                        if(!"X".equalsIgnoreCase(secondCommand))
+                        {
+                            Integer izabraniOdjel = Integer.parseInt(secondCommand);
                             izabraniOdjel--;
-                            String thirdCommand;
-                            do {
-                                System.out.println("""
-                                        Unesite redni broj komande koju zelite pozvati:
-                                        1.) Dodati doktora:
-                                        2.) Dodati pacijenta:
-                                        3.) Dodati sobu:
-                                        4.) Pretražiti doktore po specijalizaciji:
-                                        5.) Pretraziti pacijente po dijagnozi:
-                                        6.) Napraviti uputnicu:
-                                        7.) Ispisati Uputnice:
-                                        X) Kraj:
-                                        """
-                                );
-
-                                thirdCommand = sc.nextLine();
-                                switch (thirdCommand) {
-                                    case "1" -> {
-                                        boolean failedFlag;
-                                        do {
-                                            failedFlag = false;
-                                            try {
-                                                departments.get(izabraniOdjel).addDoctor(sc);
-                                            }catch(IllegalArgumentException e)
-                                            {
-                                                System.out.println(e.getMessage());
-                                                logger.error(e.getMessage(),e);
-                                                failedFlag=true;
-                                            }
-                                        }while(failedFlag);
-                                    }
-                                    case "2" ->{
-                                        boolean failedFlag;
-                                        do {
-                                            failedFlag=false;
-                                            try {
-                                                departments.get(izabraniOdjel).addPatient(sc);
-                                            }
-                                            catch (IndexOutOfBoundsException e) {
-                                                failedFlag=true;
-                                                logger.error(e.getMessage(),e);
-                                                System.out.println(e.getMessage());
-                                            }
-                                            catch(PersonnelException e)
-                                            {
-                                                logger.error(e.getMessage(),e);
-                                                System.out.println(e.getMessage());
-                                            }
-                                        }while(failedFlag);
-                                    }
-                                    case "3" ->{
-                                        departments.get(izabraniOdjel).addRoom();
-                                    }
-                                    case "4"->{
-                                        departments.get(izabraniOdjel).doctorSearchBySpecialty(sc);
-                                    }
-                                    case "5"->{
-                                        departments.get(izabraniOdjel).patientSearchByDiagnosis(sc);
-                                    }
-                                    case "6"->{
-                                        System.out.println("Feature deleted");
-                                    }
-                                    case "7"->{
-                                        departments.get(izabraniOdjel).printAppointments();
-                                    }
-
-                                }
-                            } while (!"X".equalsIgnoreCase(thirdCommand));
+                            DepartmentMenu.DepartmentMenu(DepartmentStorage.departments.get(izabraniOdjel),sc);
                         }
 
                     } while (!"X".equalsIgnoreCase(secondCommand));
@@ -152,7 +83,6 @@ public class Main {
                 }
             }
         }while(!"X".equalsIgnoreCase(mainCommand));
-
     }
 
 

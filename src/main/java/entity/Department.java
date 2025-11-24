@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
     private String name;
     private List<Doctor> doctors;
     private List<Room> rooms;
+    private List<Patient> patients;
     private List<Appoitnment> appoitnments;
 
     private static final Logger logger = LoggerFactory.getLogger(Department.class);
@@ -39,6 +40,9 @@ import java.util.stream.Collectors;
      */
     public List<Doctor> getDoctor() {
         return doctors;
+    }
+    public List<Patient> getPatients() {
+        return patients;
     }
 
     /**
@@ -102,22 +106,26 @@ import java.util.stream.Collectors;
             throw new IndexOutOfBoundsException("Unesen je redni broj doktora koji ne postoji");
 
         }
+        doctorSelection--;
 
         System.out.println("Izaberite redni broj pored sobe gdje ce se nalaziti  pacijent:");
         Utility.printMenuSelection(rooms);
 
         Integer roomSelection = sc.nextInt();
+
         sc.skip("\n");
 
         if (roomSelection > rooms.size() || roomSelection < 0) {
             throw new IndexOutOfBoundsException("Unesen je redni broj sobe koja ne postoji");
         }
+        roomSelection--;
+        patient.setRoom(rooms.get(roomSelection));
 
         Person.addPerson(patient);
         logger.info("Kreiran je pacijent s imenom: {}", patient.getName());
-        patient.addDoctor(doctors.get(doctorSelection - 1));
-        doctors.get(doctorSelection - 1).addPatient(patient);
-        rooms.get(roomSelection - 1).addPatient(patient);
+        patient.setDoctor(doctors.get(doctorSelection));
+        doctors.get(doctorSelection).addPatient(patient);
+        rooms.get(roomSelection).addPatient(patient);
 
     }
 
@@ -127,8 +135,6 @@ import java.util.stream.Collectors;
     public void addRoom() {
         rooms.add(new Room(rooms.size() + 1));
     }
-
-
 
 
     /**
@@ -162,8 +168,8 @@ import java.util.stream.Collectors;
         System.out.println("Unesite traženu dijagnozu");
         String diagnosis = sc.nextLine();
 
-         return rooms.stream().filter(room->room.patients.containsKey(diagnosis))
-                        .flatMap(room-> room.patients.get(diagnosis).stream()).toList();
+         return patients.stream()
+                 .filter(patient -> diagnosis.equals(patient.getDiagnosis())).toList();
 
     }
     public Integer patientCount()
@@ -176,20 +182,21 @@ import java.util.stream.Collectors;
     public Map<String,List<Patient>> groupByDoctor()
     {
         Map<String, List<Patient>> map =
-                rooms.stream()
-                        .flatMap(room -> room.getPatients().values().stream())
-                        .flatMap(List::stream) // jer je values() map -> Collection<List<Patient>>
-                        .collect(Collectors.groupingBy(
-                                patient -> patient.getDoctor().get().getName()
-                        ));
+                patients.stream()
+                .collect(Collectors.groupingBy(patient->patient.getDoctor().get().getName()));
 
         return map;
     }
-
     @Override
     public String getSelectionLine()
     {
         return name;
+    }
+
+    protected Optional<Patient> findPatientByName(String name)
+    {
+        return patients.stream().filter(patient -> name.equals(patient.getName())).findFirst();
+
     }
 
 

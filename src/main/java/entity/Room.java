@@ -1,16 +1,13 @@
 package entity;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Predstavlja sobu
  */
 non-sealed public class Room implements PrintableMenuSelection {
-    protected Map<String, List<Patient>> patients;
+    protected List<Patient> patients;
     private Integer id;
 
     /**
@@ -20,7 +17,8 @@ non-sealed public class Room implements PrintableMenuSelection {
     public Room(Integer id)
     {
         this.id =id;
-        patients =new HashMap<>();
+        patients =new ArrayList<>();
+
     }
 
     /**
@@ -36,7 +34,7 @@ non-sealed public class Room implements PrintableMenuSelection {
      *
      * @return Polje pacijenata
      */
-    public Map<String,List<Patient>> getPatients() {
+    public List<Patient> getPatients() {
         return patients;
     }
 
@@ -45,16 +43,7 @@ non-sealed public class Room implements PrintableMenuSelection {
      * @param patient pacijent
      */
     public void addPatient(Patient patient) {
-        if(patients.containsKey(patient.getDiagnosis()))
-        {
-            patients.get(patient.getDiagnosis()).add(patient);
-        }
-        else
-        {
-            List<Patient> list=new ArrayList<>();
-            list.add(patient);
-            patients.put(patient.getDiagnosis(),list);
-        }
+        patients.add(patient);
     }
 
     @Override
