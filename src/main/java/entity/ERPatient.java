@@ -24,7 +24,6 @@ public class ERPatient extends Patient {
     {
         Map<String,String> map= Patient.getBasicInfo(sc);
 
-
         return new ERPatientBuilder(map.get("name"),map.get("oib"),map.get("dijagnoza"),PatientStatus.HOSPITALIZED)
                 .priority(ERPatient.generatePriority(sc))
                 .build();
