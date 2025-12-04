@@ -11,7 +11,7 @@ public class DepartmentMenu {
 
     private static Logger logger= LoggerFactory.getLogger(DepartmentMenu.class);
 
-    public static void DepartmentMenu(Department selectedDepartment, Scanner sc)
+    public static void DepartmentMenu(Department Department, Scanner sc)
     {
 
             String command;
@@ -37,7 +37,7 @@ public class DepartmentMenu {
                         do {
                             failedFlag = false;
                             try {
-                                selectedDepartment.addDoctor(sc);
+                                Department.addDoctor(sc);
                             }catch(IllegalArgumentException e)
                             {
                                 System.out.println(e.getMessage());
@@ -51,7 +51,7 @@ public class DepartmentMenu {
                         do {
                             failedFlag=false;
                             try {
-                                selectedDepartment.addPatient(sc);
+                                Department.addPatient(sc);
                             }
                             catch (IndexOutOfBoundsException e) {
                                 failedFlag=true;
@@ -66,20 +66,19 @@ public class DepartmentMenu {
                         }while(failedFlag);
                     }
                     case "3" ->{
-                        selectedDepartment.addRoom();
+                        Department.addRoom();
                     }
                     case "4"->{
-                        selectedDepartment.doctorSearchBySpecialty(sc);
+                        Department.doctorSearchBySpecialty(sc);
                     }
                     case "5"->{
-                        selectedDepartment.patientSearchByDiagnosis(sc);
+                        Department.patientSearchByDiagnosis(sc);
                     }
                     case "6"->{
                         System.out.println("Unesite ime trazenog pacijenta");
                         String name=sc.nextLine();
-                        Optional<Patient> patient=selectedDepartment.findPatientByName(name);
-
-
+                        Optional<Patient> patient= Department.findPatientByName(name);
+                        PatientMenu.PatientMenu(patient, Department,sc);
 
                     }
                     case "7"->{

@@ -1,23 +1,51 @@
 package entity;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-public class EmergencyRoom {
+public class EmergencyRoom extends Department {
 
     protected static List<Patient> patients;
     private Set<Doctor> doctors;
 
     public EmergencyRoom()
     {
+        super("Emergency Room");
         patients = new ArrayList<>();
         doctors = new HashSet<>();
     }
 
     public List<Patient> getPatients() {
         return patients;
+    }
+
+    @Override
+    public void addDoctor(Scanner sc) {
+
+    }
+
+    @Override
+    public void addPatient(Scanner sc) throws IndexOutOfBoundsException, PersonnelException {
+
+    }
+
+    @Override
+    public void addRoom() {
+
+    }
+
+    @Override
+    public List<Doctor> doctorSearchBySpecialty(Scanner sc) {
+        return List.of();
+    }
+
+    @Override
+    public List<Patient> patientSearchByDiagnosis(Scanner sc) {
+        return List.of();
+    }
+
+    @Override
+    public Optional<Patient> findPatientByName(String name) {
+        return Optional.empty();
     }
 
     public Set<Doctor> getDoctors() {

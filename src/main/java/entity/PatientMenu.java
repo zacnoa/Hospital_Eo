@@ -25,12 +25,17 @@ public class PatientMenu {
 
             switch (command) {
                 case "1" -> {
-                    selectedPatient.orElseThrow().basicInformation(); // treba catch ? mozda ne posto provejravamo prije
+                    selectedPatient.orElseThrow().basicInformation();
                 }
                 case "2" -> {
 
+                    Utility.printMenuSelection(DepartmentStorage.departments);
+
+                    Integer chosenDepartment=Integer.parseInt(sc.nextLine());
+
+
                     Utility.movePatientToDepartment(selectedDepartment.getPatients(),
-                            DepartmentStorage.emergencyRoom.getPatients(),
+                            DepartmentStorage.departments.get(chosenDepartment).getPatients(),
                             selectedDepartment.getPatients().indexOf(selectedPatient));
                 }
             }

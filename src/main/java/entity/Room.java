@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * Predstavlja sobu
  */
-non-sealed public class Room implements PrintableMenuSelection {
+ public class Room implements PrintableMenuSelection {
     protected List<Patient> patients;
     private Integer id;
 

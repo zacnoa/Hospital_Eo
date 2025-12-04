@@ -7,7 +7,7 @@ import java.util.*;
  * Predstavlja osobu
  * Omogucuje obradu osobnih informacije osobe
  */
-public abstract class Person {
+public abstract class Person  {
     private String name;
     private String OIB;
     public static SequencedSet<Person> allPersons=new TreeSet<>(Comparator.comparing(Person::getName).thenComparing(Person::getOIB));

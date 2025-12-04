@@ -7,12 +7,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 
+import static entity.UnderagePatient.generateLegalGuardian;
+
 
 /**
  * Predstavlja pacijenta
  */
 
-public  class Patient extends Person {
+public  class Patient extends Person implements PrintableMenuSelection {
     private Optional<Doctor> doctor;
     private String diagnosis;
     private Integer id;
@@ -101,19 +103,22 @@ public  class Patient extends Person {
      * @param sc Inicijalizirani Scanner objekt
      * @return inicijalizirani Patient objekt
      */
-    public static Patient generatePatient(Scanner sc){
+    public static Patient generatePatient(Scanner sc) throws IllegalArgumentException{
 
+        Map<String,String> map=getBasicInfo(sc);
         System.out.println("""
                 Da li je pacijent maloljetan(Izaberite redni broj)
                 1.)Da
                 2.)Ne
                 """
         );
+
         if("1".equals(sc.nextLine()))
         {
-            return  UnderagePatient.generateUnderagePatient(sc);
+            return new UnderagePatient.UnderagePatientBuilder(map.get("ime"),map.get("oib"),map.get("dijagnoza"),PatientStatus.HOSPITALIZED)
+                    .legalGuardian(generateLegalGuardian(sc)).build();
         }
-        Map<String,String> map=getBasicInfo(sc);
+
         Patient patient=new Patient.PatientBuilder(map.get("ime"), map.get("oib"),map.get("dijagnoza"), PatientStatus.HOSPITALIZED).build();
 
         return patient;
@@ -125,6 +130,11 @@ public  class Patient extends Person {
      */
     public void setDoctor(Doctor doctor){
         this.doctor= Optional.of(doctor);
+    }
+
+    @Override
+    public String getSelectionLine() {
+        return this.getName();
     }
 
     /**

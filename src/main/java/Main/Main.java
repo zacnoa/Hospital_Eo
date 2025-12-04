@@ -4,16 +4,13 @@ import entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 
 /**
  * Klasa za pokretanje programa
  */
 
-//dodaj Exception handling za sve stvari(praznici)
+
 public class Main {
 
     /**

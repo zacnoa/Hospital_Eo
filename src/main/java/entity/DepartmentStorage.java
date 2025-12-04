@@ -4,18 +4,18 @@ import java.util.*;
 
 public  class DepartmentStorage
 {
-    public final static List<Department> departments=new ArrayList<>();
-    public final static  EmergencyRoom emergencyRoom=new EmergencyRoom();
+    public final static List<Department> departments =new ArrayList<>(List.of(new EmergencyRoom()));
+
 
     private  DepartmentStorage()
     {
-
+        departments.add(new EmergencyRoom());
     }
 
     public static void  addDepartment(Scanner sc)
     {
-        Department department=Department.generateDepartment(sc);
-        departments.add(department);
+        RegularDepartment regularDepartment = RegularDepartment.generateDepartment(sc);
+        departments.add(regularDepartment);
 
     }
 }
