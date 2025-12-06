@@ -3,6 +3,10 @@ package entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -19,7 +23,7 @@ import java.util.stream.Collectors;
     private List<Doctor> doctors;
     private List<Room> rooms;
     private List<Patient> patients;
-    private List<Appoitnment> appoitnments;
+
 
     private static final Logger logger = LoggerFactory.getLogger(RegularDepartment.class);
 
@@ -29,7 +33,6 @@ import java.util.stream.Collectors;
         this.doctors = new ArrayList<>();
         this.rooms = new ArrayList<>();
         this.addRoom();
-        appoitnments = new ArrayList<>();
         this.patients = new ArrayList<>();
     }
 
@@ -42,9 +45,20 @@ import java.util.stream.Collectors;
     public List<Doctor> getDoctor() {
         return doctors;
     }
-    @Override
+    public List<Doctor> getRooms() {
+        return doctors;
+    }
     public List<Patient> getPatients() {
         return patients;
+    }
+    public void setDoctors(List<Doctor> doctors) {
+        this.doctors = doctors;
+    }
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
+    }
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients;
     }
 
     /**
@@ -55,6 +69,9 @@ import java.util.stream.Collectors;
     public String getName() {
         return name;
     }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     /**
      * Inicijalizira doktora te ga dodaje polju doctors
@@ -63,7 +80,17 @@ import java.util.stream.Collectors;
      * @throws IllegalArgumentException Biti će bacena ako se unese prazno ime
      */
     public void addDoctor(Scanner sc) throws IllegalArgumentException {
-        doctors.add(Doctor.generateDoctor(sc));
+        Doctor doctor=Doctor.generateDoctor(sc);
+        doctors.add(doctor);
+
+        try {
+            JSONSerialization.JsonSerialization(this.doctors,DataType.DOCTOR);
+        }
+        catch(IOException e)
+        {
+            logger.error("Error while serializing doctor",e.getMessage(),e);
+        }
+
     }
 
     /**
@@ -91,14 +118,16 @@ import java.util.stream.Collectors;
      * @throws IndexOutOfBoundsException Biti ce baceno ako se izabere krivi index za doktora ili sobu
      * @throws PersonnelException        Biti ce bacena ako se pokusa stvoriti pacijent dok ne postoji doktora ili soba
      */
-    public void addPatient(Scanner sc) throws IndexOutOfBoundsException, PersonnelException {
+    public void addPatient(Scanner sc) throws IndexOutOfBoundsException, PersonnelException,IllegalArgumentException {
 
         if (doctors.isEmpty()) {
             throw new PersonnelException("Ne postoji doktor za zbrijnjavanje pacijenta");
         } else if (rooms.isEmpty()) {
             throw new PersonnelException("Ne postoji soba za smještaj pacijenta");
         }
+
         Patient patient = Patient.generatePatient(sc);
+
         System.out.println("Izaberite redni broj pored doktora koji je odgovoran za tog pacijenta:");
         Utility.printMenuSelection(doctors);
 
@@ -125,11 +154,11 @@ import java.util.stream.Collectors;
         patient.setRoom(rooms.get(roomSelection));
 
         Person.addPerson(patient);
-        logger.info("Kreiran je pacijent s imenom: {}", patient.getName());
         patient.setDoctor(doctors.get(doctorSelection));
         doctors.get(doctorSelection).addPatient(patient);
         rooms.get(roomSelection).addPatient(patient);
         this.patients.add(patient);
+        logger.info("Kreiran je pacijent s imenom: {}", patient.getName());
 
     }
 
@@ -141,12 +170,7 @@ import java.util.stream.Collectors;
     }
 
 
-    /**
-     * Printa sve uputnice za odjel
-     */
-    public void printAppointments() {
-        appoitnments.forEach(appointment -> appointment.appoitnmentTime());
-    }
+
 
 
     /**

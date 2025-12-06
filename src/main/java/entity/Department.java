@@ -18,6 +18,14 @@ public abstract class Department implements PrintableMenuSelection {
     {
         return name;
     }
+    public String  getName()
+    {
+        return name;
+    }
+    public void setName(String name)
+    {
+        this.name=name;
+    }
     public abstract List<Patient> getPatients();
 
     public abstract void addDoctor(Scanner sc);

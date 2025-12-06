@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.UUID;
 
 import static entity.UnderagePatient.generateLegalGuardian;
 
@@ -17,7 +18,7 @@ import static entity.UnderagePatient.generateLegalGuardian;
 public  class Patient extends Person implements PrintableMenuSelection {
     private Optional<Doctor> doctor;
     private String diagnosis;
-    private Integer id;
+    public String id;
     public PatientStatus status;
     private Optional<Room> room;
 
@@ -30,6 +31,14 @@ public  class Patient extends Person implements PrintableMenuSelection {
     public Optional<Doctor> getDoctor() {
         return doctor;
     }
+    /**
+     *
+     * @param doctor doktor
+     */
+    public void setDoctor(Doctor doctor){
+        this.doctor= Optional.of(doctor);
+    }
+
 
     /**
      *
@@ -38,13 +47,19 @@ public  class Patient extends Person implements PrintableMenuSelection {
     public String getDiagnosis() {
         return diagnosis;
     }
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
+    }
 
     /**
      *
      * @return Id
      */
-    public Integer getId() {
+    public String getId() {
         return id;
+    }
+    public void setId(String id) {
+        this.id = id;
     }
 
 
@@ -54,6 +69,13 @@ public  class Patient extends Person implements PrintableMenuSelection {
     public Optional<Room> getRoom()
     {
         return room;
+    }
+    public void setStatus(PatientStatus status) {
+        this.status = status;
+    }
+    public PatientStatus getStatus()
+    {
+        return status;
     }
 
 
@@ -77,6 +99,7 @@ public  class Patient extends Person implements PrintableMenuSelection {
         this.id=patientBuilder.id;
         this.status=patientBuilder.status;
     }
+    public Patient(){};
 
 
 
@@ -113,6 +136,11 @@ public  class Patient extends Person implements PrintableMenuSelection {
                 """
         );
 
+        if(map.containsValue(""))
+        {
+            throw new IllegalArgumentException("Niti jedno polje nesmije biti prazno");
+        }
+
         if("1".equals(sc.nextLine()))
         {
             return new UnderagePatient.UnderagePatientBuilder(map.get("ime"),map.get("oib"),map.get("dijagnoza"),PatientStatus.HOSPITALIZED)
@@ -124,13 +152,7 @@ public  class Patient extends Person implements PrintableMenuSelection {
         return patient;
     }
 
-    /**
-     *
-     * @param doctor doktor
-     */
-    public void setDoctor(Doctor doctor){
-        this.doctor= Optional.of(doctor);
-    }
+
 
     @Override
     public String getSelectionLine() {
@@ -144,7 +166,7 @@ public  class Patient extends Person implements PrintableMenuSelection {
         String name;
         String OIB;
         String diagnosis;
-        Integer id;
+        String id;
         PatientStatus status;
 
         Optional<Doctor> doctor;
@@ -162,6 +184,7 @@ public  class Patient extends Person implements PrintableMenuSelection {
             this.OIB=OIB;
             this.diagnosis=diagnosis;
             this.status=status;
+            this.id=UUID.randomUUID().toString();
 
         }
 

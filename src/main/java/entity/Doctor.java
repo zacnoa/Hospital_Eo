@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 /**
  * Predstavja doktora
@@ -16,6 +17,7 @@ import java.util.Scanner;
 public final class Doctor extends Employee implements PrintableMenuSelection {
     private String specialty;
     private List<Patient> patients;
+    public String id;
 
 
     private final static Logger logger= LoggerFactory.getLogger(Doctor.class);
@@ -25,8 +27,10 @@ public final class Doctor extends Employee implements PrintableMenuSelection {
         super(doctorBuilder.name,doctorBuilder.OIB,doctorBuilder.salary);
         this.specialty=doctorBuilder.specialty;
         this.patients=doctorBuilder.patients;
+        this.id= UUID.randomUUID().toString();
 
     }
+    public Doctor(){};
 
     /**
      *
@@ -35,7 +39,21 @@ public final class Doctor extends Employee implements PrintableMenuSelection {
     public String getSpecialty() {
         return specialty;
     }
-
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
+    public List<Patient> getPatients() {
+        return patients;
+    }
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients;
+    }
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
     /**
      *
      * @param patient Dodaje objekt tipa Patient u polje patients

@@ -4,7 +4,7 @@ import java.util.*;
 
 public  class DepartmentStorage
 {
-    public final static List<Department> departments =new ArrayList<>(List.of(new EmergencyRoom()));
+    public  static List<Department> departments = new ArrayList<>(List.of(new EmergencyRoom()));
 
 
     private  DepartmentStorage()
@@ -17,5 +17,13 @@ public  class DepartmentStorage
         RegularDepartment regularDepartment = RegularDepartment.generateDepartment(sc);
         departments.add(regularDepartment);
 
+    }
+    public List<Department>  getDepartments()
+    {
+        return departments;
+    }
+    public void setDepartments(List<Department> departments)
+    {
+        this.departments = departments;
     }
 }

@@ -9,6 +9,16 @@ package entity;
         super(name,OIB);
         this.salary=salary;
     }
+    public Employee(){};
+
+    public Double getSalary()
+    {
+        return salary;
+    }
+    public void setSalary(Double salary)
+    {
+        this.salary=salary;
+    }
 
 
 

@@ -33,37 +33,34 @@ public class DepartmentMenu {
                 command = sc.nextLine();
                 switch (command) {
                     case "1" -> {
-                        boolean failedFlag;
-                        do {
-                            failedFlag = false;
                             try {
                                 Department.addDoctor(sc);
                             }catch(IllegalArgumentException e)
                             {
                                 System.out.println(e.getMessage());
                                 logger.error(e.getMessage(),e);
-                                failedFlag=true;
                             }
-                        }while(failedFlag);
+
                     }
                     case "2" ->{
-                        boolean failedFlag;
-                        do {
-                            failedFlag=false;
                             try {
                                 Department.addPatient(sc);
                             }
                             catch (IndexOutOfBoundsException e) {
-                                failedFlag=true;
                                 logger.error(e.getMessage(),e);
                                 System.out.println(e.getMessage());
                             }
                             catch(PersonnelException e)
                             {
+
                                 logger.error(e.getMessage(),e);
                                 System.out.println(e.getMessage());
                             }
-                        }while(failedFlag);
+                            catch(IllegalArgumentException e)
+                            {
+                                logger.error(e.getMessage(),e);
+                                System.out.println(e.getMessage());
+                            }
                     }
                     case "3" ->{
                         Department.addRoom();

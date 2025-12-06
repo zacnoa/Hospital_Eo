@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Main {
 
     /**
-     * metoda za pokretanje programa
+     * metoda za pokretanje programan
      * @param args argumenti
      */
     static void main(String[] args) {

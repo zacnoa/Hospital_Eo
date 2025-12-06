@@ -8,7 +8,7 @@ import java.util.*;
  */
  public class Room implements PrintableMenuSelection {
     protected List<Patient> patients;
-    private Integer id;
+    private String id;
 
     /**
      *
@@ -16,7 +16,7 @@ import java.util.*;
      */
     public Room(Integer id)
     {
-        this.id =id;
+        this.id =UUID.randomUUID().toString();
         patients =new ArrayList<>();
 
     }
@@ -25,8 +25,12 @@ import java.util.*;
      *
      * @return Id
      */
-    public Integer getId() {
+    public String getId() {
         return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+
     }
 
 
@@ -49,6 +53,6 @@ import java.util.*;
     @Override
     public String getSelectionLine()
     {
-        return Integer.toString(this.id);
+        return this.id;
     }
 }

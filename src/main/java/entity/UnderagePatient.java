@@ -10,7 +10,7 @@ public class UnderagePatient extends Patient{
    @Override
    public void basicInformation()
    {
-       System.out.println("Maloljetni pacijent: "+ this.getName()+ " OIB: "+ this.getOIB() + " Skrbnik: " + this.getLegalGuardian().get().getName());
+       System.out.println("Maloljetni pacijent: "+ this.getName()+ " OIB: "+ this.getOIB() + " Skrbnik: " + this.getLegalGuardian().getName());
    }
 
 
@@ -18,6 +18,15 @@ public class UnderagePatient extends Patient{
     {
         super(builder);
         this.legalGuardian=builder.legalGuardian;
+    }
+
+    public Visitor getLegalGuardian()
+    {
+        return legalGuardian.get();
+    }
+    public void setLegalGuardian(Visitor legalGuardian)
+    {
+        this.legalGuardian=Optional.of(legalGuardian);
     }
 
     public static Visitor generateLegalGuardian(Scanner sc)
@@ -34,13 +43,6 @@ public class UnderagePatient extends Patient{
 
     }
 
-
-
-
-
-    public Optional<Visitor> getLegalGuardian() {
-        return legalGuardian;
-    }
 
     public static class UnderagePatientBuilder extends PatientBuilder<UnderagePatientBuilder>
     {

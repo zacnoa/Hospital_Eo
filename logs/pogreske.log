@@ -160,3 +160,74 @@ entity.PersonnelException: Ne postoji doktor za zbrijnjavanje pacijenta
 2025-11-30 21:03:42,150 INFO [main] e.Department [Department.java:127] Kreiran je pacijent s imenom: noa
 2025-11-30 21:44:16,843 INFO [main] e.RegularDepartment [RegularDepartment.java:83] Stvoren je odjel sa imenom: neuro
 2025-11-30 21:46:42,204 INFO [main] e.RegularDepartment [RegularDepartment.java:83] Stvoren je odjel sa imenom: neuro
+2025-12-05 15:12:37,360 INFO [main] e.RegularDepartment [RegularDepartment.java:96] Stvoren je odjel sa imenom: neuro
+2025-12-05 15:12:54,034 ERROR [main] e.DepartmentMenu [DepartmentMenu.java:56] Ne postoji doktor za zbrijnjavanje pacijenta
+entity.PersonnelException: Ne postoji doktor za zbrijnjavanje pacijenta
+	at entity.RegularDepartment.addPatient(RegularDepartment.java:110)
+	at entity.DepartmentMenu.DepartmentMenu(DepartmentMenu.java:47)
+	at Main.Main.main(Main.java:73)
+2025-12-05 15:13:06,459 INFO [main] e.Doctor [Doctor.java:95] Stvoren je doktor s imenom: iva
+2025-12-05 17:13:08,751 INFO [main] e.RegularDepartment [RegularDepartment.java:113] Stvoren je odjel sa imenom: neuro
+2025-12-05 17:13:11,553 INFO [main] e.RegularDepartment [RegularDepartment.java:113] Stvoren je odjel sa imenom: 2
+2025-12-05 17:13:32,750 INFO [main] e.Doctor [Doctor.java:95] Stvoren je doktor s imenom: Ivan Barisis
+2025-12-05 17:13:32,828 INFO [main] e.RegularDepartment [RegularDepartment.java:90] No new file was Created
+2025-12-05 17:17:25,800 INFO [main] e.RegularDepartment [RegularDepartment.java:110] Stvoren je odjel sa imenom: neuor
+2025-12-05 17:17:34,763 INFO [main] e.Doctor [Doctor.java:95] Stvoren je doktor s imenom: Ivan 
+2025-12-05 17:17:34,840 ERROR [main] e.RegularDepartment [RegularDepartment.java:91] Error while serializing doctor
+2025-12-05 17:18:35,678 INFO [main] e.RegularDepartment [RegularDepartment.java:110] Stvoren je odjel sa imenom: neuro
+2025-12-05 17:18:44,568 INFO [main] e.RegularDepartment [RegularDepartment.java:110] Stvoren je odjel sa imenom: 2
+2025-12-05 17:18:56,817 INFO [main] e.Doctor [Doctor.java:95] Stvoren je doktor s imenom: Ivan 
+2025-12-05 17:18:56,892 ERROR [main] e.RegularDepartment [RegularDepartment.java:91] Error while serializing doctor
+java.io.FileNotFoundException: LocalDataBase (Access is denied)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:255)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:210)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:120)
+	at java.base/java.io.FileWriter.<init>(FileWriter.java:67)
+	at entity.JSONSerialization.JsonSerialization(JSONSerialization.java:34)
+	at entity.RegularDepartment.addDoctor(RegularDepartment.java:87)
+	at entity.DepartmentMenu.DepartmentMenu(DepartmentMenu.java:37)
+	at Main.Main.main(Main.java:73)
+2025-12-05 17:20:04,043 INFO [main] e.RegularDepartment [RegularDepartment.java:110] Stvoren je odjel sa imenom: neuro
+2025-12-05 17:20:13,642 INFO [main] e.Doctor [Doctor.java:95] Stvoren je doktor s imenom: afsd
+2025-12-05 17:20:13,720 ERROR [main] e.RegularDepartment [RegularDepartment.java:91] Error while serializing doctor
+java.io.FileNotFoundException: LocalDataBase (Access is denied)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:255)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:210)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:120)
+	at java.base/java.io.FileWriter.<init>(FileWriter.java:67)
+	at entity.JSONSerialization.JsonSerialization(JSONSerialization.java:34)
+	at entity.RegularDepartment.addDoctor(RegularDepartment.java:87)
+	at entity.DepartmentMenu.DepartmentMenu(DepartmentMenu.java:37)
+	at Main.Main.main(Main.java:73)
+2025-12-05 17:22:14,292 INFO [main] e.RegularDepartment [RegularDepartment.java:110] Stvoren je odjel sa imenom: neuro
+2025-12-05 17:22:19,943 INFO [main] e.Doctor [Doctor.java:95] Stvoren je doktor s imenom: asdf
+2025-12-05 17:22:20,019 ERROR [main] e.RegularDepartment [RegularDepartment.java:91] Error while serializing doctor
+java.io.FileNotFoundException: 
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:255)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:210)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:120)
+	at java.base/java.io.FileWriter.<init>(FileWriter.java:67)
+	at entity.JSONSerialization.JsonSerialization(JSONSerialization.java:34)
+	at entity.RegularDepartment.addDoctor(RegularDepartment.java:87)
+	at entity.DepartmentMenu.DepartmentMenu(DepartmentMenu.java:37)
+	at Main.Main.main(Main.java:73)
+2025-12-05 17:23:57,560 INFO [main] e.RegularDepartment [RegularDepartment.java:110] Stvoren je odjel sa imenom: neuro
+2025-12-05 17:24:04,483 INFO [main] e.Doctor [Doctor.java:95] Stvoren je doktor s imenom: asdf
+2025-12-05 17:24:04,560 INFO [main] e.JSONSerialization [JSONSerialization.java:37] JSON Serialization Successfull:{"OIB":"123","name":"asdf","patients":[],"selectionLine":"asdf","specialty":"sda"}
+2025-12-05 17:24:37,809 INFO [main] e.Doctor [Doctor.java:95] Stvoren je doktor s imenom: asd
+2025-12-05 17:24:37,809 INFO [main] e.JSONSerialization [JSONSerialization.java:37] JSON Serialization Successfull:{"OIB":"123","name":"asd","patients":[],"selectionLine":"asd","specialty":"123"}
+2025-12-05 17:25:24,043 INFO [main] e.Doctor [Doctor.java:95] Stvoren je doktor s imenom: Ivan
+2025-12-05 17:25:24,043 INFO [main] e.JSONSerialization [JSONSerialization.java:37] JSON Serialization Successfull:{"OIB":"13423234","name":"Ivan","patients":[],"selectionLine":"Ivan","specialty":"koljeno"}
+2025-12-05 17:36:11,309 INFO [main] e.RegularDepartment [RegularDepartment.java:110] Stvoren je odjel sa imenom: neru
+2025-12-05 17:36:16,086 INFO [main] e.Doctor [Doctor.java:95] Stvoren je doktor s imenom: afd
+2025-12-05 17:36:16,164 INFO [main] e.JSONSerialization [JSONSerialization.java:38] JSON Serialization Successfull:[{"OIB":"asdf","name":"afd","patients":[],"selectionLine":"afd","specialty":"asd"}]
+2025-12-05 17:36:28,536 INFO [main] e.RegularDepartment [RegularDepartment.java:161] Kreiran je pacijent s imenom: asdf
+2025-12-05 17:36:33,883 INFO [main] e.Doctor [Doctor.java:95] Stvoren je doktor s imenom: aadfs
+2025-12-05 17:45:29,174 INFO [main] e.RegularDepartment [RegularDepartment.java:110] Stvoren je odjel sa imenom: neuro
+2025-12-05 17:45:36,390 INFO [main] e.Doctor [Doctor.java:95] Stvoren je doktor s imenom: sdaflk
+2025-12-05 17:45:36,470 INFO [main] e.JSONSerialization [JSONSerialization.java:38] JSON Serialization Successfull:[{"OIB":"lasdkj","name":"sdaflk","patients":[],"selectionLine":"sdaflk","specialty":"2"}]
+2025-12-05 17:45:44,090 INFO [main] e.Doctor [Doctor.java:95] Stvoren je doktor s imenom: ačsdjf
+2025-12-05 17:45:44,091 INFO [main] e.JSONSerialization [JSONSerialization.java:38] JSON Serialization Successfull:[{"OIB":"lasdkj","name":"sdaflk","patients":[],"selectionLine":"sdaflk","specialty":"2"},{"OIB":"časljkdf","name":"ačsdjf","patients":[],"selectionLine":"ačsdjf","specialty":"asdfljk"}]

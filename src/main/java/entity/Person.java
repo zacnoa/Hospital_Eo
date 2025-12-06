@@ -51,10 +51,11 @@ public abstract class Person  {
      * @param name Ime
      * @param OIB OIB
      */
-    Person(String name, String OIB) {
+    public Person(String name, String OIB) {
         this.name=name;
         this.OIB=OIB;
     }
+    public Person(){}
 
     static Map<String,String> getBasicInfo(Scanner sc)
     {
