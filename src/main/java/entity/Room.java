@@ -1,13 +1,20 @@
 package entity;
 
 
+import adapters.PatientAdapter;
+import adapters.RoomAdapter;
+import jakarta.json.bind.annotation.JsonbTransient;
+import jakarta.json.bind.annotation.JsonbTypeAdapter;
+
 import java.util.*;
 
 /**
  * Predstavlja sobu
  */
+@JsonbTypeAdapter(RoomAdapter.class)
  public class Room implements PrintableMenuSelection {
-    protected List<Patient> patients;
+
+     protected List<Patient> patients;
     private String id;
 
     /**
@@ -49,7 +56,7 @@ import java.util.*;
     public void addPatient(Patient patient) {
         patients.add(patient);
     }
-
+    @JsonbTransient
     @Override
     public String getSelectionLine()
     {

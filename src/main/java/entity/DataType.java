@@ -5,10 +5,8 @@ public enum DataType {
     PATIENT("Patient"),
     DOCTOR("Doctor"),
     ROOM("Room"),
-    REGULAR_DEPARTMENT("RegularDepartment"),
-    UNDERAGE_PATIENT("UnderagePatient"),
-    VISITOR("Visitor"),
-    ER_PATIENT("ERpatient");
+    DEPARTMENT("Department"),
+    VISITOR("Visitor");
 
 
     private final String type;

@@ -22,10 +22,9 @@ public class JSONSerialization  {
             case "Patient" -> fileToWrite=fileToWrite.concat("patients.json");
             case "Room" -> fileToWrite=fileToWrite.concat("rooms.json");
             case "Doctor" -> fileToWrite=fileToWrite.concat("doctors.json");
-            case "RegularDepartment" -> fileToWrite=fileToWrite.concat("regularDepartments.json");
-            case "UnderagePatient" -> fileToWrite=fileToWrite.concat("underagePatients.json");
+            case "Department" -> fileToWrite=fileToWrite.concat("departments.json");
             case "Visitor" -> fileToWrite=fileToWrite.concat("visitors.json");
-            case "ERPatient" -> fileToWrite=fileToWrite.concat("erPatients.json");
+
         }
 
         String json=jsonb.toJson(object);
@@ -40,6 +39,13 @@ public class JSONSerialization  {
         }
 
         return json;
+    }
+    public static void UpdateLocalDataBase(Department department) throws IOException
+    {
+        JSONSerialization.JsonSerialization(department.getPatients(), DataType.PATIENT);
+        JSONSerialization.JsonSerialization(department.getDoctors(), DataType.DOCTOR);
+        JSONSerialization.JsonSerialization(department.getRooms(), DataType.ROOM);
+        JSONSerialization.JsonSerialization(DepartmentStorage.departments, DataType.DEPARTMENT);
     }
 
 }

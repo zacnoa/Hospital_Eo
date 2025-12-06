@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class UnderagePatient extends Patient{
-    private Optional<Visitor> legalGuardian;
+    private Visitor legalGuardian;
 
    @Override
    public void basicInformation()
@@ -22,11 +22,11 @@ public class UnderagePatient extends Patient{
 
     public Visitor getLegalGuardian()
     {
-        return legalGuardian.get();
+        return legalGuardian;
     }
     public void setLegalGuardian(Visitor legalGuardian)
     {
-        this.legalGuardian=Optional.of(legalGuardian);
+        this.legalGuardian=legalGuardian;
     }
 
     public static Visitor generateLegalGuardian(Scanner sc)
@@ -46,7 +46,7 @@ public class UnderagePatient extends Patient{
 
     public static class UnderagePatientBuilder extends PatientBuilder<UnderagePatientBuilder>
     {
-         Optional<Visitor> legalGuardian;
+         Visitor legalGuardian;
 
 
         UnderagePatientBuilder(String name,String OIB,String diagnosis,PatientStatus status)
@@ -56,7 +56,7 @@ public class UnderagePatient extends Patient{
 
          UnderagePatientBuilder legalGuardian(Visitor legalGuardian)
          {
-             this.legalGuardian=Optional.of(legalGuardian);
+             this.legalGuardian=legalGuardian;
              return this;
          }
 

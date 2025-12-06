@@ -1,5 +1,9 @@
 package entity;
 
+import adapters.DoctorAdapter;
+import adapters.PatientAdapter;
+import jakarta.json.bind.annotation.JsonbTransient;
+import jakarta.json.bind.annotation.JsonbTypeAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,9 +17,11 @@ import java.util.UUID;
  * Klasa omogucava upravaljanje doktora i njegovih pacijenta
  *
  */
-
+@JsonbTypeAdapter(DoctorAdapter.class)
 public final class Doctor extends Employee implements PrintableMenuSelection {
     private String specialty;
+
+
     private List<Patient> patients;
     public String id;
 
@@ -63,7 +69,7 @@ public final class Doctor extends Employee implements PrintableMenuSelection {
     }
 
 
-
+    @JsonbTransient
     @Override
     public String getSelectionLine()
     {

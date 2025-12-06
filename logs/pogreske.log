@@ -3,26 +3,26 @@
 2025-11-02 20:48:27,363 INFO [main] e.Department [Department.java:70] Stvoren je odjel sa imenom:  
 2025-11-02 20:48:36,802 ERROR [main] Main.Main [Main.java:60] Ime odjela nemože bit prazno
 java.lang.IllegalArgumentException: Ime odjela nemože bit prazno
-	at entity.RegularDepartment.generateDepartment(Department.java:68)
+	at entity.Department.generateDepartment(Department.java:68)
 	at Main.Main.main(Main.java:55)
 2025-11-02 20:48:51,258 ERROR [main] Main.Main [Main.java:60] Ime odjela nemože bit prazno
 java.lang.IllegalArgumentException: Ime odjela nemože bit prazno
-	at entity.RegularDepartment.generateDepartment(Department.java:68)
+	at entity.Department.generateDepartment(Department.java:68)
 	at Main.Main.main(Main.java:55)
 2025-11-02 20:48:54,118 INFO [main] e.Department [Department.java:70] Stvoren je odjel sa imenom: 1
 2025-11-02 20:48:56,222 ERROR [main] Main.Main [Main.java:60] Ime odjela nemože bit prazno
 java.lang.IllegalArgumentException: Ime odjela nemože bit prazno
-	at entity.RegularDepartment.generateDepartment(Department.java:68)
+	at entity.Department.generateDepartment(Department.java:68)
 	at Main.Main.main(Main.java:55)
 2025-11-02 20:52:33,715 INFO [main] e.Department [Department.java:70] Stvoren je odjel sa imenom: 1
 2025-11-02 20:52:35,123 ERROR [main] Main.Main [Main.java:60] Ime odjela nemože bit prazno
 java.lang.IllegalArgumentException: Ime odjela nemože bit prazno
-	at entity.RegularDepartment.generateDepartment(Department.java:68)
+	at entity.Department.generateDepartment(Department.java:68)
 	at Main.Main.main(Main.java:55)
 2025-11-02 20:52:37,018 INFO [main] e.Department [Department.java:70] Stvoren je odjel sa imenom: wwws
 2025-11-02 20:57:11,618 ERROR [main] Main.Main [Main.java:60] Ime odjela nemože bit prazno
 java.lang.IllegalArgumentException: Ime odjela nemože bit prazno
-	at entity.RegularDepartment.generateDepartment(Department.java:68)
+	at entity.Department.generateDepartment(Department.java:68)
 	at Main.Main.main(Main.java:55)
 2025-11-02 20:57:16,957 INFO [main] e.Department [Department.java:70] Stvoren je odjel sa imenom: Neurologija
 2025-11-02 20:57:26,139 INFO [main] e.Doctor [Doctor.java:55] Stvoren je doktor s imenom: 
@@ -30,62 +30,62 @@ java.lang.IllegalArgumentException: Ime odjela nemože bit prazno
 2025-11-02 20:59:44,677 INFO [main] e.Department [Department.java:70] Stvoren je odjel sa imenom: Neuro
 2025-11-02 20:59:47,620 ERROR [main] Main.Main [Main.java:113] Ne postoji doktor za zbrijnjavanje pacijenta
 entity.PersonnelException: Ne postoji doktor za zbrijnjavanje pacijenta
-	at entity.RegularDepartment.addPatient(Department.java:78)
+	at entity.Department.addPatient(Department.java:78)
 	at Main.Main.main(Main.java:104)
 2025-11-02 21:00:02,018 INFO [main] e.Doctor [Doctor.java:55] Stvoren je doktor s imenom: adsf
 2025-11-02 21:00:05,582 INFO [main] e.Patient [Patient.java:57] Stvoren je pacijent imena: asdf
 2025-11-02 21:00:06,717 ERROR [main] Main.Main [Main.java:108] Unesen je redni broj doktora koji ne postoji
 java.lang.IndexOutOfBoundsException: Unesen je redni broj doktora koji ne postoji
-	at entity.RegularDepartment.addPatient(Department.java:94)
+	at entity.Department.addPatient(Department.java:94)
 	at Main.Main.main(Main.java:104)
 2025-11-02 21:00:15,447 INFO [main] e.Patient [Patient.java:57] Stvoren je pacijent imena: 
 2025-11-03 13:56:56,344 ERROR [main] Main.Main [Main.java:61] Ime odjela nemože bit prazno
 java.lang.IllegalArgumentException: Ime odjela nemože bit prazno
-	at entity.RegularDepartment.generateDepartment(Department.java:68)
+	at entity.Department.generateDepartment(Department.java:68)
 	at Main.Main.main(Main.java:55)
 2025-11-03 13:57:35,245 ERROR [main] Main.Main [Main.java:60] Ime odjela nemože bit prazno
 java.lang.IllegalArgumentException: Ime odjela nemože bit prazno
-	at entity.RegularDepartment.generateDepartment(Department.java:68)
+	at entity.Department.generateDepartment(Department.java:68)
 	at Main.Main.main(Main.java:55)
 2025-11-03 13:57:56,923 ERROR [main] Main.Main [Main.java:61] Ime odjela nemože bit prazno
 java.lang.IllegalArgumentException: Ime odjela nemože bit prazno
-	at entity.RegularDepartment.generateDepartment(Department.java:68)
+	at entity.Department.generateDepartment(Department.java:68)
 	at Main.Main.main(Main.java:55)
 2025-11-03 14:02:04,176 ERROR [main] Main.Main [Main.java:61] Ime odjela nemože bit prazno
 java.lang.IllegalArgumentException: Ime odjela nemože bit prazno
-	at entity.RegularDepartment.generateDepartment(Department.java:68)
+	at entity.Department.generateDepartment(Department.java:68)
 	at Main.Main.main(Main.java:55)
 2025-11-03 16:01:36,092 INFO [main] e.Department [Department.java:71] Stvoren je odjel sa imenom: Neuro
 2025-11-03 16:02:18,968 INFO [main] e.Department [Department.java:71] Stvoren je odjel sa imenom: Neuro
 2025-11-03 16:02:28,403 ERROR [main] Main.Main [Main.java:106] Ime doktora ne smije biti prazno
 java.lang.IllegalArgumentException: Ime doktora ne smije biti prazno
 	at entity.Doctor.generateDoctor(Doctor.java:47)
-	at entity.RegularDepartment.addDoctor(Department.java:58)
+	at entity.Department.addDoctor(Department.java:58)
 	at Main.Main.main(Main.java:102)
 2025-11-03 16:02:51,547 INFO [main] e.Doctor [Doctor.java:60] Stvoren je doktor s imenom: Ivan
 2025-11-03 16:03:11,255 INFO [main] e.Patient [Patient.java:57] Stvoren je pacijent imena: 
 2025-11-03 16:03:13,082 ERROR [main] Main.Main [Main.java:120] Unesen je redni broj doktora koji ne postoji
 java.lang.IndexOutOfBoundsException: Unesen je redni broj doktora koji ne postoji
-	at entity.RegularDepartment.addPatient(Department.java:95)
+	at entity.Department.addPatient(Department.java:95)
 	at Main.Main.main(Main.java:116)
 2025-11-03 16:04:24,119 INFO [main] e.Department [Department.java:71] Stvoren je odjel sa imenom: neuro
 2025-11-03 16:04:31,423 INFO [main] e.Doctor [Doctor.java:60] Stvoren je doktor s imenom: ivan
 2025-11-03 16:04:38,957 INFO [main] e.Patient [Patient.java:57] Stvoren je pacijent imena: ivan
 2025-11-03 16:04:40,407 ERROR [main] Main.Main [Main.java:120] Unesen je redni broj doktora koji ne postoji
 java.lang.IndexOutOfBoundsException: Unesen je redni broj doktora koji ne postoji
-	at entity.RegularDepartment.addPatient(Department.java:96)
+	at entity.Department.addPatient(Department.java:96)
 	at Main.Main.main(Main.java:116)
 2025-11-03 16:04:45,686 INFO [main] e.Patient [Patient.java:57] Stvoren je pacijent imena: idasf
 2025-11-03 16:04:51,319 ERROR [main] Main.Main [Main.java:120] Unesen je redni broj sobe koja ne postoji
 java.lang.IndexOutOfBoundsException: Unesen je redni broj sobe koja ne postoji
-	at entity.RegularDepartment.addPatient(Department.java:109)
+	at entity.Department.addPatient(Department.java:109)
 	at Main.Main.main(Main.java:116)
 2025-11-03 16:05:34,361 INFO [main] e.Department [Department.java:71] Stvoren je odjel sa imenom: dasf
 2025-11-03 16:05:38,444 INFO [main] e.Doctor [Doctor.java:60] Stvoren je doktor s imenom: adf
 2025-11-03 16:05:41,740 INFO [main] e.Patient [Patient.java:57] Stvoren je pacijent imena: asdf
 2025-11-03 16:05:43,154 ERROR [main] Main.Main [Main.java:120] Unesen je redni broj doktora koji ne postoji
 java.lang.IndexOutOfBoundsException: Unesen je redni broj doktora koji ne postoji
-	at entity.RegularDepartment.addPatient(Department.java:96)
+	at entity.Department.addPatient(Department.java:96)
 	at Main.Main.main(Main.java:116)
 2025-11-03 16:05:48,244 INFO [main] e.Patient [Patient.java:57] Stvoren je pacijent imena: asfd
 2025-11-03 16:09:10,607 INFO [main] e.Department [Department.java:71] Stvoren je odjel sa imenom: sdf
@@ -93,12 +93,12 @@ java.lang.IndexOutOfBoundsException: Unesen je redni broj doktora koji ne postoj
 2025-11-03 16:09:20,167 INFO [main] e.Patient [Patient.java:57] Stvoren je pacijent imena: asdf
 2025-11-03 16:09:21,387 ERROR [main] Main.Main [Main.java:120] Unesen je redni broj doktora koji ne postoji
 java.lang.IndexOutOfBoundsException: Unesen je redni broj doktora koji ne postoji
-	at entity.RegularDepartment.addPatient(Department.java:96)
+	at entity.Department.addPatient(Department.java:96)
 	at Main.Main.main(Main.java:116)
 2025-11-03 16:09:24,983 INFO [main] e.Patient [Patient.java:57] Stvoren je pacijent imena: sdaf
 2025-11-03 16:09:26,774 ERROR [main] Main.Main [Main.java:120] Unesen je redni broj sobe koja ne postoji
 java.lang.IndexOutOfBoundsException: Unesen je redni broj sobe koja ne postoji
-	at entity.RegularDepartment.addPatient(Department.java:109)
+	at entity.Department.addPatient(Department.java:109)
 	at Main.Main.main(Main.java:116)
 2025-11-03 16:09:28,666 INFO [main] e.Patient [Patient.java:57] Stvoren je pacijent imena: adsf
 2025-11-08 18:16:31,647 INFO [main] e.Department [Department.java:77] Stvoren je odjel sa imenom: neuro
@@ -120,7 +120,7 @@ java.lang.IndexOutOfBoundsException: Unesen je redni broj sobe koja ne postoji
 2025-11-30 20:13:48,349 INFO [main] e.Department [Department.java:81] Stvoren je odjel sa imenom: neuro
 2025-11-30 20:14:16,194 ERROR [main] e.DepartmentMenu [DepartmentMenu.java:63] Ne postoji doktor za zbrijnjavanje pacijenta
 entity.PersonnelException: Ne postoji doktor za zbrijnjavanje pacijenta
-	at entity.RegularDepartment.addPatient(Department.java:95)
+	at entity.Department.addPatient(Department.java:95)
 	at entity.DepartmentMenu.DepartmentMenu(DepartmentMenu.java:54)
 	at Main.Main.main(Main.java:76)
 2025-11-30 20:16:54,626 INFO [main] e.Doctor [Doctor.java:85] Stvoren je doktor s imenom: asdkfa
@@ -135,7 +135,7 @@ entity.PersonnelException: Ne postoji doktor za zbrijnjavanje pacijenta
 2025-11-30 20:45:42,957 INFO [main] e.Department [Department.java:81] Stvoren je odjel sa imenom: neuro
 2025-11-30 20:45:52,139 ERROR [main] e.DepartmentMenu [DepartmentMenu.java:63] Ne postoji doktor za zbrijnjavanje pacijenta
 entity.PersonnelException: Ne postoji doktor za zbrijnjavanje pacijenta
-	at entity.RegularDepartment.addPatient(Department.java:95)
+	at entity.Department.addPatient(Department.java:95)
 	at entity.DepartmentMenu.DepartmentMenu(DepartmentMenu.java:54)
 	at Main.Main.main(Main.java:76)
 2025-11-30 20:45:56,645 INFO [main] e.Doctor [Doctor.java:85] Stvoren je doktor s imenom: ačklf
@@ -163,7 +163,7 @@ entity.PersonnelException: Ne postoji doktor za zbrijnjavanje pacijenta
 2025-12-05 15:12:37,360 INFO [main] e.RegularDepartment [RegularDepartment.java:96] Stvoren je odjel sa imenom: neuro
 2025-12-05 15:12:54,034 ERROR [main] e.DepartmentMenu [DepartmentMenu.java:56] Ne postoji doktor za zbrijnjavanje pacijenta
 entity.PersonnelException: Ne postoji doktor za zbrijnjavanje pacijenta
-	at entity.RegularDepartment.addPatient(RegularDepartment.java:110)
+	at entity.Department.addPatient(RegularDepartment.java:110)
 	at entity.DepartmentMenu.DepartmentMenu(DepartmentMenu.java:47)
 	at Main.Main.main(Main.java:73)
 2025-12-05 15:13:06,459 INFO [main] e.Doctor [Doctor.java:95] Stvoren je doktor s imenom: iva
@@ -185,7 +185,7 @@ java.io.FileNotFoundException: LocalDataBase (Access is denied)
 	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:120)
 	at java.base/java.io.FileWriter.<init>(FileWriter.java:67)
 	at entity.JSONSerialization.JsonSerialization(JSONSerialization.java:34)
-	at entity.RegularDepartment.addDoctor(RegularDepartment.java:87)
+	at entity.Department.addDoctor(RegularDepartment.java:87)
 	at entity.DepartmentMenu.DepartmentMenu(DepartmentMenu.java:37)
 	at Main.Main.main(Main.java:73)
 2025-12-05 17:20:04,043 INFO [main] e.RegularDepartment [RegularDepartment.java:110] Stvoren je odjel sa imenom: neuro
@@ -198,7 +198,7 @@ java.io.FileNotFoundException: LocalDataBase (Access is denied)
 	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:120)
 	at java.base/java.io.FileWriter.<init>(FileWriter.java:67)
 	at entity.JSONSerialization.JsonSerialization(JSONSerialization.java:34)
-	at entity.RegularDepartment.addDoctor(RegularDepartment.java:87)
+	at entity.Department.addDoctor(RegularDepartment.java:87)
 	at entity.DepartmentMenu.DepartmentMenu(DepartmentMenu.java:37)
 	at Main.Main.main(Main.java:73)
 2025-12-05 17:22:14,292 INFO [main] e.RegularDepartment [RegularDepartment.java:110] Stvoren je odjel sa imenom: neuro
@@ -211,7 +211,7 @@ java.io.FileNotFoundException:
 	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:120)
 	at java.base/java.io.FileWriter.<init>(FileWriter.java:67)
 	at entity.JSONSerialization.JsonSerialization(JSONSerialization.java:34)
-	at entity.RegularDepartment.addDoctor(RegularDepartment.java:87)
+	at entity.Department.addDoctor(RegularDepartment.java:87)
 	at entity.DepartmentMenu.DepartmentMenu(DepartmentMenu.java:37)
 	at Main.Main.main(Main.java:73)
 2025-12-05 17:23:57,560 INFO [main] e.RegularDepartment [RegularDepartment.java:110] Stvoren je odjel sa imenom: neuro
@@ -231,3 +231,22 @@ java.io.FileNotFoundException:
 2025-12-05 17:45:36,470 INFO [main] e.JSONSerialization [JSONSerialization.java:38] JSON Serialization Successfull:[{"OIB":"lasdkj","name":"sdaflk","patients":[],"selectionLine":"sdaflk","specialty":"2"}]
 2025-12-05 17:45:44,090 INFO [main] e.Doctor [Doctor.java:95] Stvoren je doktor s imenom: ačsdjf
 2025-12-05 17:45:44,091 INFO [main] e.JSONSerialization [JSONSerialization.java:38] JSON Serialization Successfull:[{"OIB":"lasdkj","name":"sdaflk","patients":[],"selectionLine":"sdaflk","specialty":"2"},{"OIB":"časljkdf","name":"ačsdjf","patients":[],"selectionLine":"ačsdjf","specialty":"asdfljk"}]
+2025-12-06 13:08:53,290 INFO [main] e.Department [Department.java:109] Stvoren je odjel sa imenom: neuro
+2025-12-06 13:12:07,998 INFO [main] e.Department [Department.java:116] Stvoren je odjel sa imenom: neuor
+2025-12-06 13:13:30,547 INFO [main] e.Department [Department.java:116] Stvoren je odjel sa imenom: neuro
+2025-12-06 13:17:51,939 INFO [main] e.Department [Department.java:113] Stvoren je odjel sa imenom: neuro
+2025-12-06 13:17:52,048 INFO [main] e.JSONSerialization [JSONSerialization.java:37] JSON Serialization Successfull:[{"id":"f1022a81-ff31-4db7-adbf-a3d3bc9b50cf","patients":[],"selectionLine":"f1022a81-ff31-4db7-adbf-a3d3bc9b50cf"}]
+2025-12-06 13:17:52,049 INFO [main] e.JSONSerialization [JSONSerialization.java:37] JSON Serialization Successfull:[]
+2025-12-06 13:17:58,193 INFO [main] e.Department [Department.java:113] Stvoren je odjel sa imenom: nova
+2025-12-06 13:17:58,194 INFO [main] e.JSONSerialization [JSONSerialization.java:37] JSON Serialization Successfull:[{"id":"6d6b52c9-ffeb-4d10-a8b6-833e712f7e9f","patients":[],"selectionLine":"6d6b52c9-ffeb-4d10-a8b6-833e712f7e9f"}]
+2025-12-06 13:17:58,200 INFO [main] e.JSONSerialization [JSONSerialization.java:37] JSON Serialization Successfull:[{"doctors":[],"name":"neuro","patients":[],"rooms":["f1022a81-ff31-4db7-adbf-a3d3bc9b50cf"],"selectionLine":"neuro"}]
+2025-12-06 13:18:15,186 INFO [main] e.Doctor [Doctor.java:108] Stvoren je doktor s imenom: ivan barisic
+2025-12-06 13:18:15,188 INFO [main] e.JSONSerialization [JSONSerialization.java:37] JSON Serialization Successfull:[{"OIB":"3223434","name":"ivan barisic","id":"fb5db644-c93c-4cd8-b759-522b19192b2a","patients":[],"selectionLine":"ivan barisic","specialty":"koljeno"}]
+2025-12-06 13:18:15,189 INFO [main] e.JSONSerialization [JSONSerialization.java:37] JSON Serialization Successfull:[{"doctors":["fb5db644-c93c-4cd8-b759-522b19192b2a"],"name":"neuro","patients":[],"rooms":["f1022a81-ff31-4db7-adbf-a3d3bc9b50cf"],"selectionLine":"neuro"},{"doctors":[],"name":"nova","patients":[],"rooms":["6d6b52c9-ffeb-4d10-a8b6-833e712f7e9f"],"selectionLine":"nova"}]
+2025-12-06 13:18:19,800 INFO [main] e.JSONSerialization [JSONSerialization.java:37] JSON Serialization Successfull:[{"id":"f1022a81-ff31-4db7-adbf-a3d3bc9b50cf","patients":[],"selectionLine":"f1022a81-ff31-4db7-adbf-a3d3bc9b50cf"},{"id":"02aaab49-9fca-40c7-bd7a-b89f20ce7f43","patients":[],"selectionLine":"02aaab49-9fca-40c7-bd7a-b89f20ce7f43"}]
+2025-12-06 13:18:19,801 INFO [main] e.JSONSerialization [JSONSerialization.java:37] JSON Serialization Successfull:[{"doctors":["fb5db644-c93c-4cd8-b759-522b19192b2a"],"name":"neuro","patients":[],"rooms":["f1022a81-ff31-4db7-adbf-a3d3bc9b50cf","02aaab49-9fca-40c7-bd7a-b89f20ce7f43"],"selectionLine":"neuro"},{"doctors":[],"name":"nova","patients":[],"rooms":["6d6b52c9-ffeb-4d10-a8b6-833e712f7e9f"],"selectionLine":"nova"}]
+2025-12-06 13:18:47,959 INFO [main] e.JSONSerialization [JSONSerialization.java:37] JSON Serialization Successfull:[{"OIB":"212443","name":"noa","diagnosis":"Neurocisticna fibrioza doljnjeg koljena","doctor":"fb5db644-c93c-4cd8-b759-522b19192b2a","id":"31153cbf-7e2a-4970-bab3-168aedd779cd","room":"02aaab49-9fca-40c7-bd7a-b89f20ce7f43","selectionLine":"noa","status":"HOSPITALIZED"}]
+2025-12-06 13:18:47,960 INFO [main] e.JSONSerialization [JSONSerialization.java:37] JSON Serialization Successfull:[{"OIB":"3223434","name":"ivan barisic","id":"fb5db644-c93c-4cd8-b759-522b19192b2a","patients":["31153cbf-7e2a-4970-bab3-168aedd779cd"],"selectionLine":"ivan barisic","specialty":"koljeno"}]
+2025-12-06 13:18:47,960 INFO [main] e.JSONSerialization [JSONSerialization.java:37] JSON Serialization Successfull:[{"id":"f1022a81-ff31-4db7-adbf-a3d3bc9b50cf","patients":[],"selectionLine":"f1022a81-ff31-4db7-adbf-a3d3bc9b50cf"},{"id":"02aaab49-9fca-40c7-bd7a-b89f20ce7f43","patients":["31153cbf-7e2a-4970-bab3-168aedd779cd"],"selectionLine":"02aaab49-9fca-40c7-bd7a-b89f20ce7f43"}]
+2025-12-06 13:18:47,960 INFO [main] e.JSONSerialization [JSONSerialization.java:37] JSON Serialization Successfull:[{"doctors":["fb5db644-c93c-4cd8-b759-522b19192b2a"],"name":"neuro","patients":["31153cbf-7e2a-4970-bab3-168aedd779cd"],"rooms":["f1022a81-ff31-4db7-adbf-a3d3bc9b50cf","02aaab49-9fca-40c7-bd7a-b89f20ce7f43"],"selectionLine":"neuro"},{"doctors":[],"name":"nova","patients":[],"rooms":["6d6b52c9-ffeb-4d10-a8b6-833e712f7e9f"],"selectionLine":"nova"}]
+2025-12-06 13:18:47,960 INFO [main] e.Department [Department.java:171] Kreiran je pacijent s imenom: noa

@@ -1,6 +1,7 @@
 package adapters;
 
 import entity.Doctor;
+import entity.PersonnelStorage;
 import jakarta.json.bind.adapter.JsonbAdapter;
 
 public class DoctorAdapter implements JsonbAdapter<Doctor, String> {
@@ -13,7 +14,7 @@ public class DoctorAdapter implements JsonbAdapter<Doctor, String> {
     @Override
     public Doctor adaptFromJson(String id)
     {
-        return null;
+        return PersonnelStorage.doctorStorage.get(id);
     }
 
 

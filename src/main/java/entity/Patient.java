@@ -1,5 +1,11 @@
 package entity;
 
+import adapters.DoctorAdapter;
+
+import adapters.PatientAdapter;
+import adapters.RoomAdapter;
+import jakarta.json.bind.annotation.JsonbTransient;
+import jakarta.json.bind.annotation.JsonbTypeAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,13 +20,15 @@ import static entity.UnderagePatient.generateLegalGuardian;
 /**
  * Predstavlja pacijenta
  */
-
+@JsonbTypeAdapter(PatientAdapter.class)
 public  class Patient extends Person implements PrintableMenuSelection {
-    private Optional<Doctor> doctor;
+
+    private Doctor doctor;
     private String diagnosis;
     public String id;
     public PatientStatus status;
-    private Optional<Room> room;
+
+    private Room room;
 
     private final static Logger logger= LoggerFactory.getLogger(Patient.class);
 
@@ -28,7 +36,7 @@ public  class Patient extends Person implements PrintableMenuSelection {
      *
      * @return doktora
      */
-    public Optional<Doctor> getDoctor() {
+    public Doctor getDoctor() {
         return doctor;
     }
     /**
@@ -36,7 +44,7 @@ public  class Patient extends Person implements PrintableMenuSelection {
      * @param doctor doktor
      */
     public void setDoctor(Doctor doctor){
-        this.doctor= Optional.of(doctor);
+        this.doctor= doctor;
     }
 
 
@@ -64,9 +72,9 @@ public  class Patient extends Person implements PrintableMenuSelection {
 
 
     public void setRoom(Room room) {
-        this.room =Optional.of(room);
+        this.room =room;
     }
-    public Optional<Room> getRoom()
+    public Room getRoom()
     {
         return room;
     }
@@ -153,7 +161,7 @@ public  class Patient extends Person implements PrintableMenuSelection {
     }
 
 
-
+    @JsonbTransient
     @Override
     public String getSelectionLine() {
         return this.getName();
