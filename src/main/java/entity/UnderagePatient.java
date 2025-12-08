@@ -1,8 +1,9 @@
 package entity;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.Scanner;
+
+import static entity.Utility.addLegalGuardian;
 
 public class UnderagePatient extends Patient{
     private Visitor legalGuardian;
@@ -19,6 +20,7 @@ public class UnderagePatient extends Patient{
         super(builder);
         this.legalGuardian=builder.legalGuardian;
     }
+    public UnderagePatient(){}
 
     public Visitor getLegalGuardian()
     {
@@ -29,17 +31,13 @@ public class UnderagePatient extends Patient{
         this.legalGuardian=legalGuardian;
     }
 
-    public static Visitor generateLegalGuardian(Scanner sc)
-    {
-        Map<String,String> map=Person.getBasicInfo(sc);
-        return new  Visitor(map.get("ime"),map.get("oib"));
-    }
+
 
     public static  UnderagePatient generateUnderagePatient(Scanner sc)
     {
         Map<String,String> map=Patient.getBasicInfo(sc);
         return new UnderagePatientBuilder(map.get("ime"),map.get("oib"),map.get("dijagnoza"),PatientStatus.HOSPITALIZED)
-                .legalGuardian(generateLegalGuardian(sc)).build();
+                .legalGuardian(addLegalGuardian(sc)).build();
 
     }
 

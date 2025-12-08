@@ -4,6 +4,7 @@ import entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -21,13 +22,17 @@ public class Main {
 
 
         Logger logger= LoggerFactory.getLogger(Main.class);
-
-
-
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Dobro došli u našu bolnicu!!\nMolimo vas popunite našu evidenciju.");
-        DepartmentStorage.addDepartment(sc);
+        System.out.println("Dobro došli u našu bolnicu!!\n");
+        try
+        {
+            DataBaseManager.loadFromLocalDataBase();
+            DataBaseManager.createBackup();
+        }catch (IOException e)
+        {
+            logger.error("Error while loading localDataBase",e.getMessage(),e);
+        }
 
 
 
@@ -38,6 +43,8 @@ public class Main {
                     1.) Dodati novi odjel:
                     2.) Lista Odjela:
                     3.) Ispis zaposlenika:
+                    4.) Učitaj pomočnu kopiju
+                    5.)Ispiši Log
                     X) Kraj:
                     """
 
@@ -50,15 +57,18 @@ public class Main {
                         failedFlag = false;
                         try {
                             DepartmentStorage.addDepartment(sc);
-                        }
-                        catch (IllegalArgumentException e) {
-                            failedFlag=true;
+                        } catch (IllegalArgumentException e) {
+                            failedFlag = true;
 
-                            logger.error(e.getMessage(),e);
+                            logger.error(e.getMessage(), e);
                             System.out.println(e.getMessage());
 
                         }
-                    }while(failedFlag);
+                        catch (IOException e)
+                        {
+                            logger.error("Greska pri spremanju departmentStorage u bazu",e.getMessage(), e);
+                        }
+                    } while (failedFlag);
                 }
                 case "2" -> {
                     String secondCommand;
@@ -66,17 +76,27 @@ public class Main {
                     do {
                         Utility.printMenuSelection(DepartmentStorage.departments);
                         secondCommand = sc.nextLine();
-                        if(!"X".equalsIgnoreCase(secondCommand))
-                        {
+                        if (!"X".equalsIgnoreCase(secondCommand)) {
                             Integer izabraniOdjel = Integer.parseInt(secondCommand);
                             izabraniOdjel--;
-                            DepartmentMenu.DepartmentMenu(DepartmentStorage.departments.get(izabraniOdjel),sc);
+                            DepartmentMenu.DepartmentMenu(DepartmentStorage.departments.get(izabraniOdjel), sc);
                         }
 
                     } while (!"X".equalsIgnoreCase(secondCommand));
                 }
                 case "3" -> {
                     Person.printAllPersons();
+                }
+                case "4" ->{
+                    try {
+                        DataBaseManager.loadFromBackup();
+                    }catch(IOException |ClassNotFoundException e)
+                    {
+                        logger.error("Greška pri ucitavanju pomocne kopije",e.getMessage(),e);
+                    }
+                }
+                case "5" ->{
+                    LogManager.printAllLogs();
                 }
             }
         }while(!"X".equalsIgnoreCase(mainCommand));

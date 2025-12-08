@@ -1,161 +1,132 @@
 package entity;
 
-import adapters.DoctorAdapter;
-import adapters.PatientAdapter;
+import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbTransient;
-import jakarta.json.bind.annotation.JsonbTypeAdapter;
+import jakarta.xml.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.UUID;
 
-/**
- * Predstavja doktora
- * Klasa omogucava upravaljanje doktora i njegovih pacijenta
- *
- */
-@JsonbTypeAdapter(DoctorAdapter.class)
-public final class Doctor extends Employee implements PrintableMenuSelection {
+@XmlRootElement(name = "doctor")
+@XmlAccessorType(XmlAccessType.PROPERTY)
+public final class Doctor extends Employee implements PrintableMenuSelection, Serializable {
+
     private String specialty;
 
+    @XmlTransient
+    @JsonbTransient
+    private List<String> patients = new ArrayList<>();
 
-    private List<Patient> patients;
-    public String id;
+    private final static Logger logger = LoggerFactory.getLogger(Doctor.class);
 
-
-    private final static Logger logger= LoggerFactory.getLogger(Doctor.class);
-
+    public Doctor() {}
 
     private Doctor(DoctorBuilder doctorBuilder) {
-        super(doctorBuilder.name,doctorBuilder.OIB,doctorBuilder.salary);
-        this.specialty=doctorBuilder.specialty;
-        this.patients=doctorBuilder.patients;
-        this.id= UUID.randomUUID().toString();
-
+        super(doctorBuilder.name, doctorBuilder.OIB, doctorBuilder.salary);
+        this.specialty = doctorBuilder.specialty;
+        this.patients = doctorBuilder.patients;
     }
-    public Doctor(){};
 
-    /**
-     *
-     * @return Vraca specijalizaciju doktora
-     */
+    @XmlElement(name = "specialty")
+    @JsonbProperty("specialty")
     public String getSpecialty() {
         return specialty;
     }
+
+    @JsonbProperty("specialty")
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
     }
+
+    @XmlTransient
+    @JsonbTransient
     public List<Patient> getPatients() {
-        return patients;
-    }
-    public void setPatients(List<Patient> patients) {
-        this.patients = patients;
-    }
-    public String getId() {
-        return id;
-    }
-    public void setId(String id) {
-        this.id = id;
-    }
-    /**
-     *
-     * @param patient Dodaje objekt tipa Patient u polje patients
-     */
-    public void addPatient(Patient patient){
-        patients.add(patient);
+        return PersonnelStorage.getPatientsByIds(patients);
     }
 
+    @XmlTransient
+    @JsonbTransient
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients.stream()
+                .map(Patient::getId)
+                .toList();
+    }
+
+    @XmlElementWrapper(name = "patients")
+    @XmlElement(name = "patientId")
+    @JsonbProperty("patientIds")
+    public List<String> getPatientIds() {
+        return patients;
+    }
+
+    @JsonbProperty("patientIds")
+    public void setPatientIds(List<String> patients) {
+        this.patients = patients;
+    }
+
+    public void addPatient(Patient patient) {
+        patients.add(patient.getId());
+    }
 
     @JsonbTransient
     @Override
-    public String getSelectionLine()
-    {
+    public String getSelectionLine() {
         return super.getName();
     }
 
+    public static Doctor generateDoctor(Scanner sc) {
+        System.out.println("Unesite ime doktora:");
+        String name = sc.nextLine();
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("Ime doktora ne smije biti prazno");
+        }
 
-    /**
-     *
-     * @param sc Inicijalizirani Scanner objekt
-     * @return Vraca inicijaliziranog doktora
-     * @throws IllegalArgumentException biti ce bacena ako se unese prazno ime
-     */
-    static Doctor generateDoctor(Scanner sc) throws IllegalArgumentException{
+        System.out.println("Unesite OIB doktora:");
+        String OIB = sc.nextLine();
 
-            System.out.println("Unesite ime doktora:");
-            String name = sc.nextLine();
-            if(name.isEmpty())
-            {
-                throw new IllegalArgumentException("Ime doktora ne smije biti prazno");
-            }
+        System.out.println("Unesite specijalizaciju doktora:");
+        String specialty = sc.nextLine();
 
-            System.out.println("Unesite OIB doktora:");
-            String OIB = sc.nextLine();
+        System.out.println("Unesite placu doktora:");
+        Double salary = sc.nextDouble();
+        sc.skip("\n");
 
-            System.out.println("Unesite specijalizaciju doktora:");
-            String specialty = sc.nextLine();
-
-            System.out.println("Unesite placu doktora:");
-            Double  salary = sc.nextDouble();
-            sc.skip("\n");
-
-            Doctor doctor = new Doctor.DoctorBuilder(name, OIB, specialty, salary).build();
-
-
-        Person.addPerson(doctor);
-        logger.info("Stvoren je doktor s imenom: {}",name);
+        Doctor doctor = new Doctor.DoctorBuilder(name, OIB, specialty, salary).build();
+        logger.info("Stvoren je doktor s imenom: {}", name);
         return doctor;
-
     }
-
 
     @Override
     public void basicInformation() {
-        System.out.println("Doktor:"+ super.getName() +" specijalizacija doktora: " + specialty);
+        System.out.println("Doktor: " + super.getName() + " specijalizacija: " + specialty);
     }
 
-    /**
-     * BuilderPattern za klasu doktor
-     */
-    public static class DoctorBuilder{
+    public static class DoctorBuilder {
         private String name;
         private String OIB;
         private String specialty;
         private Double salary;
+        private List<String> patients = new ArrayList<>();
 
-        private  List<Patient> patients=new ArrayList<>();
-
-        /**
-         *
-         * @param name      Ime doktora
-         * @param OIB       OIB doktora
-         * @param specialty Specijalizacija doktora
-         * @param salary   placa doktora
-         */
-        public DoctorBuilder(String name, String OIB, String specialty,Double salary) {
-            this.name=name;
-            this.OIB=OIB;
-            this.specialty=specialty;
+        public DoctorBuilder(String name, String OIB, String specialty, Double salary) {
+            this.name = name;
+            this.OIB = OIB;
+            this.specialty = specialty;
+            this.salary = salary;
         }
 
-        /**
-         *
-         * @param patients polje pacijenata
-         * @return Referncu na trenutni objekt
-         */
-        public DoctorBuilder patients(List<Patient> patients){
-            this.patients=patients;
+        public DoctorBuilder patients(List<Patient> patients) {
+            this.patients = patients.stream()
+                    .map(Patient::getId)
+                    .toList();
             return this;
         }
 
-        /**
-         *
-         * @return Inicijalizirani objekt Doctor
-         */
-        public Doctor build(){
+        public Doctor build() {
             return new Doctor(this);
         }
     }

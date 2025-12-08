@@ -1,65 +1,86 @@
 package entity;
 
-
-import adapters.PatientAdapter;
-import adapters.RoomAdapter;
+import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbTransient;
-import jakarta.json.bind.annotation.JsonbTypeAdapter;
-
+import jakarta.xml.bind.annotation.*;
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Predstavlja sobu
  */
-@JsonbTypeAdapter(RoomAdapter.class)
- public class Room implements PrintableMenuSelection {
+@XmlRootElement(name = "room")  // DODAJ OVO
+@XmlAccessorType(XmlAccessType.PROPERTY)  // DODAJ OVO
+public class Room implements PrintableMenuSelection, Serializable {
 
-     protected List<Patient> patients;
+    private List<String> patients;
     private String id;
 
     /**
-     *
-     * @param id Id sobe
+     * Konstruktor
      */
-    public Room(Integer id)
-    {
-        this.id =UUID.randomUUID().toString();
-        patients =new ArrayList<>();
-
+    public Room() {
+        this.id = UUID.randomUUID().toString();
+        this.patients = new ArrayList<>();
     }
 
     /**
-     *
      * @return Id
      */
+    @XmlElement(name = "id")  // DODAJ OVO
+    @JsonbProperty("id")
     public String getId() {
         return id;
     }
+
+    @JsonbProperty("id")
     public void setId(String id) {
         this.id = id;
-
     }
 
+    /**
+     * @return Polje pacijenata (objekti)
+     */
+    @XmlTransient
+    @JsonbTransient
+    public List<Patient> getPatients() {
+        return PersonnelStorage.getPatientsByIds(patients);
+    }
+
+    @XmlTransient
+    @JsonbTransient
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients.stream()
+                .map(Patient::getId)
+                .toList();
+    }
 
     /**
-     *
-     * @return Polje pacijenata
+     * @return Lista ID-ova pacijenata (za serijalizaciju)
      */
-    public List<Patient> getPatients() {
+    @XmlElementWrapper(name = "patients")
+    @XmlElement(name = "patientId")
+    @JsonbProperty("patients")
+    public List<String> getPatientsId() {
         return patients;
     }
 
+    @JsonbProperty("patients")
+    public void setPatientsId(List<String> patients) {
+        this.patients = patients;
+    }
+
     /**
-     *  Dodaje pacijenta u sobu
+     * Dodaje pacijenta u sobu
      * @param patient pacijent
      */
     public void addPatient(Patient patient) {
-        patients.add(patient);
+        patients.add(patient.getId());
     }
+
     @JsonbTransient
     @Override
-    public String getSelectionLine()
-    {
+    public String getSelectionLine() {
         return this.id;
     }
 }

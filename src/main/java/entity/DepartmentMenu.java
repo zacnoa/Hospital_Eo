@@ -3,6 +3,7 @@ package entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -11,7 +12,7 @@ public class DepartmentMenu {
 
     private static Logger logger= LoggerFactory.getLogger(DepartmentMenu.class);
 
-    public static void DepartmentMenu(Department Department, Scanner sc)
+    public static void DepartmentMenu(Department department, Scanner sc)
     {
 
             String command;
@@ -21,11 +22,12 @@ public class DepartmentMenu {
                                         1.) Dodati doktora:
                                         2.) Dodati pacijenta:
                                         3.) Dodati sobu:
-                                        4.) Pretražiti doktore po specijalizaciji:
-                                        5.) Pretraziti pacijente po dijagnozi:
-                                        6.) Pretraziti pacijente po imenu:
-                                        7.) Napraviti uputnicu:
-                                        8.) Ispisati Uputnice:
+                                        4.) Dodati posjetitelja:
+                                        5.) Pretražiti doktore po specijalizaciji:
+                                        6.) Pretraziti pacijente po dijagnozi:
+                                        7.) Pretraziti pacijente po imenu:
+                                        8.) Napraviti uputnicu:
+                                        9.) Ispisati Uputnice:
                                         X) Kraj:
                                         """
                 );
@@ -34,7 +36,7 @@ public class DepartmentMenu {
                 switch (command) {
                     case "1" -> {
                             try {
-                                Department.addDoctor(sc);
+                                department.addDoctor(sc);
                             }catch(IllegalArgumentException e)
                             {
                                 System.out.println(e.getMessage());
@@ -44,7 +46,7 @@ public class DepartmentMenu {
                     }
                     case "2" ->{
                             try {
-                                Department.addPatient(sc);
+                                department.addPatient(sc);
                             }
                             catch (IndexOutOfBoundsException e) {
                                 logger.error(e.getMessage(),e);
@@ -63,25 +65,33 @@ public class DepartmentMenu {
                             }
                     }
                     case "3" ->{
-                        Department.addRoom();
+                        department.addRoom();
                     }
                     case "4"->{
-                        Department.doctorSearchBySpecialty(sc);
+                        department.doctorSearchBySpecialty(sc);
                     }
                     case "5"->{
-                        Department.patientSearchByDiagnosis(sc);
+                        try {
+                            department.addVisitor(sc);
+                        }catch(IOException e)
+                        {
+                            logger.error(e.getMessage(),e);
+                        }
                     }
                     case "6"->{
-                        System.out.println("Unesite ime trazenog pacijenta");
-                        String name=sc.nextLine();
-                        Optional<Patient> patient= Department.findPatientByName(name);
-                        PatientMenu.PatientMenu(patient, Department,sc);
-
+                        department.patientSearchByDiagnosis(sc);
                     }
                     case "7"->{
+                        System.out.println("Unesite ime trazenog pacijenta");
+                        String name=sc.nextLine();
+                        Optional<Patient> patient= department.findPatientByName(name);
+                        PatientMenu.PatientMenu(patient, department,sc);
+
+                    }
+                    case "8"->{
                         System.out.println("Feature deleted");
                     }
-                    case  "8"->{
+                    case  "9"->{
                         System.out.println("Feature deleted");
                     }
 
