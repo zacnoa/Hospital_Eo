@@ -6,7 +6,7 @@ import java.util.Scanner;
 import static entity.Utility.addLegalGuardian;
 
 public class UnderagePatient extends Patient{
-    private Visitor legalGuardian;
+    private String legalGuardianId;
 
    @Override
    public void basicInformation()
@@ -18,17 +18,25 @@ public class UnderagePatient extends Patient{
     private UnderagePatient(UnderagePatientBuilder builder)
     {
         super(builder);
-        this.legalGuardian=builder.legalGuardian;
+        this.legalGuardianId =builder.legalGuardian;
     }
     public UnderagePatient(){}
 
     public Visitor getLegalGuardian()
     {
-        return legalGuardian;
+        return PersonnelStorage.findVisitor(legalGuardianId);
     }
-    public void setLegalGuardian(Visitor legalGuardian)
+    public void setLegalGuardian(String legalGuardian)
     {
-        this.legalGuardian=legalGuardian;
+        this.legalGuardianId =legalGuardian;
+    }
+    public  String getLegalGuardianId()
+    {
+        return legalGuardianId;
+    }
+    public void setLegalGuardianId(String legalGuardianId)
+    {
+        this.legalGuardianId =legalGuardianId;
     }
 
 
@@ -37,22 +45,21 @@ public class UnderagePatient extends Patient{
     {
         Map<String,String> map=Patient.getBasicInfo(sc);
         return new UnderagePatientBuilder(map.get("ime"),map.get("oib"),map.get("dijagnoza"),PatientStatus.HOSPITALIZED)
-                .legalGuardian(addLegalGuardian(sc)).build();
+                .legalGuardian(addLegalGuardian(sc).getId()).build();
 
     }
 
 
     public static class UnderagePatientBuilder extends PatientBuilder<UnderagePatientBuilder>
     {
-         Visitor legalGuardian;
-
+         String legalGuardian;
 
         UnderagePatientBuilder(String name,String OIB,String diagnosis,PatientStatus status)
         {
             super(name,OIB,diagnosis,status);
         }
 
-         UnderagePatientBuilder legalGuardian(Visitor legalGuardian)
+         UnderagePatientBuilder legalGuardian(String legalGuardianId)
          {
              this.legalGuardian=legalGuardian;
              return this;

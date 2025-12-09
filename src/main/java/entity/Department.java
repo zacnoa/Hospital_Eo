@@ -1,8 +1,5 @@
 package entity;
 
-import jakarta.json.bind.annotation.JsonbProperty;
-import jakarta.json.bind.annotation.JsonbTransient;
-import jakarta.xml.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,24 +8,16 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@XmlRootElement(name="department")
-@XmlAccessorType(XmlAccessType.PROPERTY)
+
 public class Department implements PrintableMenuSelection, Serializable {
 
     private String name;
 
 
-    private List<String> doctors = new ArrayList<>();
-
-
-    private List<String> rooms = new ArrayList<>();
-
-
-    private List<String> patients = new ArrayList<>();
-
-
-    private List<String> visitors = new ArrayList<>();
-
+    private List<String> doctorIds = new ArrayList<>();
+    private List<String> roomIds = new ArrayList<>();
+    private List<String> patientIds = new ArrayList<>();
+    private List<String> visitorIds = new ArrayList<>();
     private static final Logger logger = LoggerFactory.getLogger(Department.class);
 
     public Department(String name) {
@@ -37,119 +26,101 @@ public class Department implements PrintableMenuSelection, Serializable {
 
     public Department() {}
 
-    @XmlElement(name = "name")
-    @JsonbProperty("name")
+
     public String getName() {
         return name;
     }
 
-    @JsonbProperty("name")
+
     public void setName(String name) {
         this.name = name;
     }
 
-    @XmlTransient
-    @JsonbTransient
+
     public List<Doctor> getDoctors() {
-        return PersonnelStorage.getDoctorsByIds(doctors);
+        return PersonnelStorage.getDoctorsByIds(doctorIds);
     }
 
-    @XmlTransient
-    @JsonbTransient
+
     public void setDoctors(List<Doctor> list) {
-        this.doctors = list.stream().map(Doctor::getId).toList();
+        this.doctorIds = list.stream().map(Doctor::getId).toList();
     }
 
-    @XmlElementWrapper(name = "doctors")
-    @XmlElement(name = "doctorId")
-    @JsonbProperty("doctorIds")
+
     public List<String> getDoctorIds() {
-        return doctors;
+        return doctorIds;
     }
 
-    @JsonbProperty("doctorIds")
+
     public void setDoctorIds(List<String> ids) {
-        this.doctors = ids;
+        this.doctorIds = ids;
     }
 
-    @XmlTransient
-    @JsonbTransient
+
     public List<Room> getRooms() {
-        return PersonnelStorage.getRoomsByIds(rooms);
+        return PersonnelStorage.getRoomsByIds(roomIds);
     }
 
-    @XmlTransient
-    @JsonbTransient
+
     public void setRooms(List<Room> list) {
-        this.rooms = list.stream().map(Room::getId).toList();
+        this.roomIds = list.stream().map(Room::getId).toList();
     }
 
-    @XmlElementWrapper(name = "rooms")
-    @XmlElement(name = "roomId")
-    @JsonbProperty("roomIds")
+
     public List<String> getRoomIds() {
-        return rooms;
+        return roomIds;
     }
 
-    @JsonbProperty("roomIds")
+
     public void setRoomIds(List<String> ids) {
-        this.rooms = ids;
+        this.roomIds = ids;
     }
 
-    @XmlTransient
-    @JsonbTransient
     public List<Patient> getPatients() {
-        return PersonnelStorage.getPatientsByIds(patients);
+        return PersonnelStorage.getPatientsByIds(patientIds);
     }
 
-    @XmlTransient
-    @JsonbTransient
+
     public void setPatients(List<Patient> list) {
-        this.patients = list.stream().map(Patient::getId).toList();
+        this.patientIds = list.stream().map(Patient::getId).toList();
     }
 
-    @XmlElementWrapper(name = "patients")
-    @XmlElement(name = "patientId")
-    @JsonbProperty("patientIds")
+
     public List<String> getPatientIds() {
-        return patients;
+        return patientIds;
     }
 
-    @JsonbProperty("patientIds")
+
     public void setPatientIds(List<String> ids) {
-        this.patients = ids;
+        this.patientIds = ids;
     }
 
-    @XmlTransient
-    @JsonbTransient
+
     public List<Visitor> getVisitors() {
-        return PersonnelStorage.getVisitorsByIds(visitors);
+        return PersonnelStorage.getVisitorsByIds(visitorIds);
     }
 
-    @XmlTransient
-    @JsonbTransient
+
     public void setVisitors(List<Visitor> list) {
-        this.visitors = list.stream().map(Visitor::getId).toList();
+        this.visitorIds = list.stream().map(Visitor::getId).toList();
     }
 
-    @XmlElementWrapper(name = "visitors")
-    @XmlElement(name = "visitorId")
-    @JsonbProperty("visitorIds")
+
     public List<String> getVisitorIds() {
-        return visitors;
+        return visitorIds;
     }
 
-    @JsonbProperty("visitorIds")
+
     public void setVisitorIds(List<String> ids) {
-        this.visitors = ids;
+        this.visitorIds = ids;
     }
 
-    @XmlTransient
+
     public void addDoctor(Scanner sc) throws IllegalArgumentException {
         Doctor doctor = Doctor.generateDoctor(sc);
-        doctors.add(doctor.getId());
+        doctorIds.add(doctor.getId());
         PersonnelStorage.doctorStorage.put(doctor.getId(), doctor);
-        LogManager.logDoctorCreated(doctor);
+
         try {
             DataBaseManager.jsonSerialization(PersonnelStorage.doctorStorage, DataType.DOCTOR);
             DataBaseManager.jsonSerialization(DepartmentStorage.departments, DataType.DEPARTMENT);
@@ -158,16 +129,16 @@ public class Department implements PrintableMenuSelection, Serializable {
         }
     }
 
-    @XmlTransient
+
     public void addVisitor(Scanner sc) throws IOException {
         Visitor visitor = Visitor.generateVisitor(sc);
-        visitors.add(visitor.getId());
+        visitorIds.add(visitor.getId());
         PersonnelStorage.visitorStorage.put(visitor.getId(), visitor);
-        LogManager.logVisitorAdmitted(visitor);
+
         DataBaseManager.jsonSerialization(visitor, DataType.VISITOR);
     }
 
-    @XmlTransient
+
     public static Department generateDepartment(Scanner sc) throws IllegalArgumentException {
         System.out.println("Upišite ime novog Odjela:");
         String name = sc.nextLine();
@@ -176,36 +147,36 @@ public class Department implements PrintableMenuSelection, Serializable {
         return new Department(name);
     }
 
-    @XmlTransient
+
     public void addPatient(Scanner sc) throws IndexOutOfBoundsException, PersonnelException, IllegalArgumentException {
-        if (doctors.isEmpty()) throw new PersonnelException("Ne postoji doktor za zbrinjavanje pacijenta");
-        if (rooms.isEmpty()) throw new PersonnelException("Ne postoji soba za smještaj pacijenta");
+        if (doctorIds.isEmpty()) throw new PersonnelException("Ne postoji doktor za zbrinjavanje pacijenta");
+        if (roomIds.isEmpty()) throw new PersonnelException("Ne postoji soba za smještaj pacijenta");
 
         Patient patient = Patient.generatePatient(sc);
 
         System.out.println("Izaberite doktora:");
         Utility.printMenuSelection(getDoctors());
         int doctorSel = sc.nextInt(); sc.skip("\n");
-        if (doctorSel <= 0 || doctorSel > doctors.size())
+        if (doctorSel <= 0 || doctorSel > doctorIds.size())
             throw new IndexOutOfBoundsException("Nepostojeći doktor");
         doctorSel--;
 
         System.out.println("Izaberite sobu:");
         Utility.printMenuSelection(getRooms());
         int roomSel = sc.nextInt(); sc.skip("\n");
-        if (roomSel <= 0 || roomSel > rooms.size())
+        if (roomSel <= 0 || roomSel > roomIds.size())
             throw new IndexOutOfBoundsException("Nepostojeća soba");
         roomSel--;
 
-        patient.setRoom(PersonnelStorage.findRoom(rooms.get(roomSel)));
-        patient.setDoctor(PersonnelStorage.findDoctor(doctors.get(doctorSel)));
+        patient.setRoom(PersonnelStorage.findRoom(roomIds.get(roomSel)));
+        patient.setDoctor(PersonnelStorage.findDoctor(doctorIds.get(doctorSel)));
 
-        PersonnelStorage.findDoctor(doctors.get(doctorSel)).addPatient(patient);
-        PersonnelStorage.findRoom(rooms.get(roomSel)).addPatient(patient);
+        PersonnelStorage.findDoctor(doctorIds.get(doctorSel)).addPatient(patient);
+        PersonnelStorage.findRoom(roomIds.get(roomSel)).addPatient(patient);
 
-        patients.add(patient.getId());
+        patientIds.add(patient.getId());
         PersonnelStorage.patientStorage.put(patient.getId(), patient);
-        LogManager.logPatientAdmitted(patient);
+
         try {
             DataBaseManager.updateAllCollections();
         } catch(IOException e) {
@@ -217,9 +188,9 @@ public class Department implements PrintableMenuSelection, Serializable {
 
     public void addRoom() {
         Room newRoom = new Room();
-        rooms.add(newRoom.getId());
+        roomIds.add(newRoom.getId());
         PersonnelStorage.roomStorage.put(newRoom.getId(), newRoom);
-        LogManager.logRoomAdded(newRoom);
+
         try {
             DataBaseManager.jsonSerialization(PersonnelStorage.roomStorage, DataType.ROOM);
             DataBaseManager.jsonSerialization(DepartmentStorage.departments, DataType.DEPARTMENT);
@@ -228,14 +199,14 @@ public class Department implements PrintableMenuSelection, Serializable {
         }
     }
 
-    @XmlTransient
+
     public List<Doctor> doctorSearchBySpecialty(Scanner sc) {
         System.out.println("Unesite traženu specijalizaciju");
         String specialty = sc.nextLine();
         return getDoctors().stream().filter(d -> specialty.equals(d.getSpecialty())).toList();
     }
 
-    @XmlTransient
+
     public List<Patient> patientSearchByDiagnosis(Scanner sc) {
         System.out.println("Unesite traženu dijagnozu");
         String diagnosis = sc.nextLine();
@@ -246,8 +217,7 @@ public class Department implements PrintableMenuSelection, Serializable {
         return getPatients().stream().collect(Collectors.groupingBy(p -> p.getDoctor().getName()));
     }
 
-    @JsonbTransient
-    @Override
+
     public String getSelectionLine() {
         return name;
     }

@@ -4,7 +4,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlTransient;
 
-@XmlRootElement(name="employee")
+
 public abstract class Employee extends Person {
 
     private Double salary;
@@ -16,7 +16,7 @@ public abstract class Employee extends Person {
 
     public Employee(){}
 
-    @XmlElement(name = "salary")
+
     public Double getSalary() {
         return salary;
     }

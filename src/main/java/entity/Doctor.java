@@ -1,79 +1,61 @@
 package entity;
 
-import jakarta.json.bind.annotation.JsonbProperty;
-import jakarta.json.bind.annotation.JsonbTransient;
-import jakarta.xml.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-@XmlRootElement(name = "doctor")
-@XmlAccessorType(XmlAccessType.PROPERTY)
+
 public final class Doctor extends Employee implements PrintableMenuSelection, Serializable {
 
     private String specialty;
+    private List<String> patientIds = new ArrayList<>();
 
-    @XmlTransient
-    @JsonbTransient
-    private List<String> patients = new ArrayList<>();
-
-    private final static Logger logger = LoggerFactory.getLogger(Doctor.class);
 
     public Doctor() {}
 
     private Doctor(DoctorBuilder doctorBuilder) {
         super(doctorBuilder.name, doctorBuilder.OIB, doctorBuilder.salary);
         this.specialty = doctorBuilder.specialty;
-        this.patients = doctorBuilder.patients;
+        this.patientIds = doctorBuilder.patients;
     }
 
-    @XmlElement(name = "specialty")
-    @JsonbProperty("specialty")
+
     public String getSpecialty() {
         return specialty;
     }
 
-    @JsonbProperty("specialty")
+
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
     }
 
-    @XmlTransient
-    @JsonbTransient
+
     public List<Patient> getPatients() {
-        return PersonnelStorage.getPatientsByIds(patients);
+        return PersonnelStorage.getPatientsByIds(patientIds);
     }
 
-    @XmlTransient
-    @JsonbTransient
+
     public void setPatients(List<Patient> patients) {
-        this.patients = patients.stream()
+        this.patientIds = patients.stream()
                 .map(Patient::getId)
                 .toList();
     }
 
-    @XmlElementWrapper(name = "patients")
-    @XmlElement(name = "patientId")
-    @JsonbProperty("patientIds")
+
     public List<String> getPatientIds() {
-        return patients;
+        return patientIds;
     }
 
-    @JsonbProperty("patientIds")
+
     public void setPatientIds(List<String> patients) {
-        this.patients = patients;
+        this.patientIds = patients;
     }
 
     public void addPatient(Patient patient) {
-        patients.add(patient.getId());
+        patientIds.add(patient.getId());
     }
 
-    @JsonbTransient
-    @Override
     public String getSelectionLine() {
         return super.getName();
     }
@@ -96,7 +78,6 @@ public final class Doctor extends Employee implements PrintableMenuSelection, Se
         sc.skip("\n");
 
         Doctor doctor = new Doctor.DoctorBuilder(name, OIB, specialty, salary).build();
-        logger.info("Stvoren je doktor s imenom: {}", name);
         return doctor;
     }
 

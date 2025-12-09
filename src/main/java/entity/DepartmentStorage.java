@@ -17,7 +17,7 @@ public  class DepartmentStorage
     {
         Department department = Department.generateDepartment(sc);
         departments.add(department);
-        LogManager.logDepartmentCreated(department);
+
         DataBaseManager.jsonSerialization(departments,DataType.DEPARTMENT);
 
     }

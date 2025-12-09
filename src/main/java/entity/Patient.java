@@ -14,7 +14,7 @@ import java.util.UUID;
 
 import static entity.Utility.addLegalGuardian;
 
-@XmlRootElement(name = "patient")
+
 
 public class Patient extends Person implements PrintableMenuSelection, Serializable {
 
@@ -35,75 +35,63 @@ public class Patient extends Person implements PrintableMenuSelection, Serializa
     public Patient() {}
 
 
-    @XmlTransient
-    @JsonbTransient
+
     public Doctor getDoctor() {
         return PersonnelStorage.findDoctor(doctorId);
     }
 
-    @XmlTransient
-    @JsonbTransient
+
     public void setDoctor(Doctor doctor) {
         this.doctorId = doctor != null ? doctor.getId() : null;
     }
 
 
-    @XmlElement(name = "doctorId")  // DODAJ OVO
-    @JsonbProperty("doctorId")
+
     public String getDoctorId() {
         return doctorId;
     }
 
-    @JsonbProperty("doctorId")
     public void setDoctorId(String id) {
         this.doctorId = id;
     }
 
 
-    @XmlTransient
-    @JsonbTransient
     public Room getRoom() {
         return PersonnelStorage.findRoom(roomId);
     }
 
-    @XmlTransient
-    @JsonbTransient
+
     public void setRoom(Room room) {
         this.roomId = room != null ? room.getId() : null;
     }
 
 
-    @XmlElement(name = "roomId")
-    @JsonbProperty("roomId")
+
     public String getRoomId() {
         return roomId;
     }
 
-    @JsonbProperty("roomId")
+
     public void setRoomId(String id) {
         this.roomId = id;
     }
 
 
-    @XmlElement(name = "diagnosis")
-    @JsonbProperty("diagnosis")
+
     public String getDiagnosis() {
         return diagnosis;
     }
 
-    @JsonbProperty("diagnosis")
+
     public void setDiagnosis(String diagnosis) {
         this.diagnosis = diagnosis;
     }
 
 
-    @XmlElement(name = "status")
-    @JsonbProperty("status")
     public PatientStatus getStatus() {
         return status;
     }
 
-    @JsonbProperty("status")
     public void setStatus(PatientStatus status) {
         this.status = status;
     }
@@ -111,14 +99,13 @@ public class Patient extends Person implements PrintableMenuSelection, Serializa
 
 
 
-    // OSTALE METODE
+
     @Override
     public void basicInformation() {
         System.out.println("Pacijent: " + super.getName() + " OIB: " + super.getOIB());
     }
 
-    @JsonbTransient
-    @Override
+
     public String getSelectionLine() {
         return this.getName();
     }
@@ -153,7 +140,7 @@ public class Patient extends Person implements PrintableMenuSelection, Serializa
                     map.get("oib"),
                     map.get("dijagnoza"),
                     PatientStatus.HOSPITALIZED)
-                    .legalGuardian(addLegalGuardian(sc))
+                    .legalGuardian(addLegalGuardian(sc).getId())
                     .build();
         }
 

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 
-@XmlAccessorType(XmlAccessType.PROPERTY)
+
 public class Visitor extends Person implements Serializable {
 
     public Visitor(String ime, String oib) {
