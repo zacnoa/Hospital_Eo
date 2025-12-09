@@ -6,8 +6,8 @@ public enum DataType {
     DOCTOR("Doctor"),
     ROOM("Room"),
     DEPARTMENT("Department"),
-    VISITOR("Visitor"),
-    INFO("Info");
+    VISITOR("Visitor");
+
 
 
     private final String type;
@@ -20,4 +20,6 @@ public enum DataType {
     {
         return type;
     }
+
+
 }

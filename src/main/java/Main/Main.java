@@ -96,7 +96,7 @@ public class Main {
                     }
                 }
                 case "5" ->{
-                    LogManager.printAllLogs();
+
                 }
             }
         }while(!"X".equalsIgnoreCase(mainCommand));

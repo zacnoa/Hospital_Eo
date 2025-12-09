@@ -1,4 +1,5 @@
 package entity;
+import adapters.PatientAdapter;
 import jakarta.json.bind.*;
 import jakarta.xml.bind.JAXBContext;
 import org.slf4j.Logger;
@@ -17,7 +18,9 @@ import java.util.stream.Collectors;
 public class DataBaseManager {
 
     private static Logger logger = LoggerFactory.getLogger(DataBaseManager.class);
-    private static Jsonb jsonb = JsonbBuilder.create();
+    private static  JsonbConfig config = new JsonbConfig().withAdapters(new PatientAdapter());
+    private static Jsonb jsonb = JsonbBuilder.create(config);
+
 
     public static  String jsonSerialization(Object object, DataType type) throws IOException {
         String fileToWrite = "LocalDataBase/";
@@ -27,6 +30,7 @@ public class DataBaseManager {
             case "Doctor" -> fileToWrite = fileToWrite.concat("doctors.json");
             case "Department" -> fileToWrite = fileToWrite.concat("departments.json");
             case "Visitor" -> fileToWrite = fileToWrite.concat("visitors.json");
+
 
         }
 
@@ -49,6 +53,7 @@ public class DataBaseManager {
             case "Doctor" -> fileToRead = fileToRead.concat("doctors.json");
             case "Department" -> fileToRead = fileToRead.concat("departments.json");
             case "Visitor" -> fileToRead = fileToRead.concat("visitors.json");
+
 
         }
 
@@ -84,6 +89,8 @@ public class DataBaseManager {
         DataBaseManager.jsonSerialization(PersonnelStorage.doctorStorage, DataType.DOCTOR);
         DataBaseManager.jsonSerialization(PersonnelStorage.roomStorage, DataType.ROOM);
         DataBaseManager.jsonSerialization(DepartmentStorage.departments,DataType.DEPARTMENT);
+        DataBaseManager.jsonSerialization(PersonnelStorage.visitorStorage, DataType.VISITOR);
+
     }
 
 
@@ -95,6 +102,8 @@ public class DataBaseManager {
         jsonDeserialization(DataType.PATIENT);
         jsonDeserialization(DataType.DOCTOR);
         jsonDeserialization(DataType.DEPARTMENT);
+
+
 
 
     }

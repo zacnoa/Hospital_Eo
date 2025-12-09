@@ -1,5 +1,6 @@
 package entity;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +19,7 @@ public class Department implements PrintableMenuSelection, Serializable {
     private List<String> roomIds = new ArrayList<>();
     private List<String> patientIds = new ArrayList<>();
     private List<String> visitorIds = new ArrayList<>();
+
     private static final Logger logger = LoggerFactory.getLogger(Department.class);
 
     public Department(String name) {
@@ -25,6 +27,35 @@ public class Department implements PrintableMenuSelection, Serializable {
     }
 
     public Department() {}
+
+
+    @JsonbTransient
+    public List<Doctor> getDoctors() {
+        return PersonnelStorage.getDoctorsByIds(doctorIds);
+    }
+
+    @JsonbTransient
+    public void setDoctors(List<Doctor> list) {
+        this.doctorIds = list.stream().map(Doctor::getId).toList();
+    }
+    @JsonbTransient
+    public List<Room> getRooms() {
+        return PersonnelStorage.getRoomsByIds(roomIds);
+    }
+
+    @JsonbTransient
+    public void setRooms(List<Room> list) {
+        this.roomIds = list.stream().map(Room::getId).toList();
+    }
+    @JsonbTransient
+    public List<Patient> getPatients() {
+        return PersonnelStorage.getPatientsByIds(patientIds);
+    }
+
+    @JsonbTransient
+    public void setPatients(List<Patient> list) {
+        this.patientIds = list.stream().map(Patient::getId).toList();
+    }
 
 
     public String getName() {
@@ -37,14 +68,6 @@ public class Department implements PrintableMenuSelection, Serializable {
     }
 
 
-    public List<Doctor> getDoctors() {
-        return PersonnelStorage.getDoctorsByIds(doctorIds);
-    }
-
-
-    public void setDoctors(List<Doctor> list) {
-        this.doctorIds = list.stream().map(Doctor::getId).toList();
-    }
 
 
     public List<String> getDoctorIds() {
@@ -57,16 +80,6 @@ public class Department implements PrintableMenuSelection, Serializable {
     }
 
 
-    public List<Room> getRooms() {
-        return PersonnelStorage.getRoomsByIds(roomIds);
-    }
-
-
-    public void setRooms(List<Room> list) {
-        this.roomIds = list.stream().map(Room::getId).toList();
-    }
-
-
     public List<String> getRoomIds() {
         return roomIds;
     }
@@ -76,14 +89,6 @@ public class Department implements PrintableMenuSelection, Serializable {
         this.roomIds = ids;
     }
 
-    public List<Patient> getPatients() {
-        return PersonnelStorage.getPatientsByIds(patientIds);
-    }
-
-
-    public void setPatients(List<Patient> list) {
-        this.patientIds = list.stream().map(Patient::getId).toList();
-    }
 
 
     public List<String> getPatientIds() {
@@ -171,11 +176,15 @@ public class Department implements PrintableMenuSelection, Serializable {
         patient.setRoom(PersonnelStorage.findRoom(roomIds.get(roomSel)));
         patient.setDoctor(PersonnelStorage.findDoctor(doctorIds.get(doctorSel)));
 
+
         PersonnelStorage.findDoctor(doctorIds.get(doctorSel)).addPatient(patient);
         PersonnelStorage.findRoom(roomIds.get(roomSel)).addPatient(patient);
 
         patientIds.add(patient.getId());
-        PersonnelStorage.patientStorage.put(patient.getId(), patient);
+
+
+            PersonnelStorage.patientStorage.put(patient.getId(), patient);
+
 
         try {
             DataBaseManager.updateAllCollections();
@@ -217,7 +226,7 @@ public class Department implements PrintableMenuSelection, Serializable {
         return getPatients().stream().collect(Collectors.groupingBy(p -> p.getDoctor().getName()));
     }
 
-
+    @JsonbTransient
     public String getSelectionLine() {
         return name;
     }

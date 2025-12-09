@@ -52,7 +52,6 @@ public class Utility {
     {
         Map<String,String> map=Person.getBasicInfo(sc);
         Visitor visitor=new Visitor(map.get("ime"),map.get("oib"));
-        PersonnelStorage.visitorStorage.put(visitor.getId(),visitor);
         return visitor;
     }
 

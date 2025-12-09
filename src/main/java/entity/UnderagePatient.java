@@ -6,7 +6,7 @@ import java.util.Scanner;
 import static entity.Utility.addLegalGuardian;
 
 public class UnderagePatient extends Patient{
-    private String legalGuardianId;
+    private Visitor legalGuardian;
 
    @Override
    public void basicInformation()
@@ -18,25 +18,25 @@ public class UnderagePatient extends Patient{
     private UnderagePatient(UnderagePatientBuilder builder)
     {
         super(builder);
-        this.legalGuardianId =builder.legalGuardian;
+        this.legalGuardian=builder.legalGuardian;
     }
     public UnderagePatient(){}
 
     public Visitor getLegalGuardian()
     {
-        return PersonnelStorage.findVisitor(legalGuardianId);
+        return legalGuardian;
     }
-    public void setLegalGuardian(String legalGuardian)
+    public void setLegalGuardian(Visitor legalGuardian)
     {
-        this.legalGuardianId =legalGuardian;
+        this.legalGuardian =legalGuardian;
     }
-    public  String getLegalGuardianId()
+    public  Visitor getLegalGuardianId()
     {
-        return legalGuardianId;
+        return legalGuardian;
     }
-    public void setLegalGuardianId(String legalGuardianId)
+    public void setLegalGuardianId(Visitor legalGuardianId)
     {
-        this.legalGuardianId =legalGuardianId;
+        this.legalGuardian =legalGuardianId;
     }
 
 
@@ -45,21 +45,21 @@ public class UnderagePatient extends Patient{
     {
         Map<String,String> map=Patient.getBasicInfo(sc);
         return new UnderagePatientBuilder(map.get("ime"),map.get("oib"),map.get("dijagnoza"),PatientStatus.HOSPITALIZED)
-                .legalGuardian(addLegalGuardian(sc).getId()).build();
+                .legalGuardian(addLegalGuardian(sc)).build();
 
     }
 
 
     public static class UnderagePatientBuilder extends PatientBuilder<UnderagePatientBuilder>
     {
-         String legalGuardian;
+         Visitor legalGuardian;
 
-        UnderagePatientBuilder(String name,String OIB,String diagnosis,PatientStatus status)
+         public UnderagePatientBuilder(String name,String OIB,String diagnosis,PatientStatus status)
         {
             super(name,OIB,diagnosis,status);
         }
 
-         UnderagePatientBuilder legalGuardian(String legalGuardianId)
+         public UnderagePatientBuilder legalGuardian(Visitor legalGuardian)
          {
              this.legalGuardian=legalGuardian;
              return this;

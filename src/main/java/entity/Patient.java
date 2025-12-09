@@ -35,16 +35,24 @@ public class Patient extends Person implements PrintableMenuSelection, Serializa
     public Patient() {}
 
 
-
+    @JsonbTransient
     public Doctor getDoctor() {
         return PersonnelStorage.findDoctor(doctorId);
     }
 
-
+    @JsonbTransient
     public void setDoctor(Doctor doctor) {
         this.doctorId = doctor != null ? doctor.getId() : null;
     }
+    @JsonbTransient
+    public Room getRoom() {
+        return PersonnelStorage.findRoom(roomId);
+    }
 
+    @JsonbTransient
+    public void setRoom(Room room) {
+        this.roomId = room != null ? room.getId() : null;
+    }
 
 
     public String getDoctorId() {
@@ -54,17 +62,6 @@ public class Patient extends Person implements PrintableMenuSelection, Serializa
     public void setDoctorId(String id) {
         this.doctorId = id;
     }
-
-
-    public Room getRoom() {
-        return PersonnelStorage.findRoom(roomId);
-    }
-
-
-    public void setRoom(Room room) {
-        this.roomId = room != null ? room.getId() : null;
-    }
-
 
 
     public String getRoomId() {
@@ -106,9 +103,6 @@ public class Patient extends Person implements PrintableMenuSelection, Serializa
     }
 
 
-    public String getSelectionLine() {
-        return this.getName();
-    }
 
 
     static Map<String, String> getBasicInfo(Scanner sc) {
@@ -140,7 +134,7 @@ public class Patient extends Person implements PrintableMenuSelection, Serializa
                     map.get("oib"),
                     map.get("dijagnoza"),
                     PatientStatus.HOSPITALIZED)
-                    .legalGuardian(addLegalGuardian(sc).getId())
+                    .legalGuardian(addLegalGuardian(sc))
                     .build();
         }
 

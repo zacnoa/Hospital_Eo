@@ -11,7 +11,7 @@ import java.util.*;
  * Omogucuje obradu osobnih informacije osobe
  */
 
-public abstract class Person implements Serializable {
+public abstract class Person implements Serializable,PrintableMenuSelection {
 
     private String name;
     private String OIB;
@@ -21,6 +21,22 @@ public abstract class Person implements Serializable {
     public static SequencedSet<Person> allPersons = new TreeSet<>(
             Comparator.comparing(Person::getName).thenComparing(Person::getOIB)
     );
+
+    /**
+     * @param name Ime
+     * @param OIB OIB
+     */
+    public Person(String name, String OIB) {
+        this.name = name;
+        this.OIB = OIB;
+        this.id = UUID.randomUUID().toString();
+        Person.addPerson(this);
+    }
+
+    public Person() {}
+
+
+
 
     /**
      * Ispisuje staticno polje allPersons
@@ -72,19 +88,8 @@ public abstract class Person implements Serializable {
         this.id = id;
     }
 
-    /**
-     * @param name Ime
-     * @param OIB OIB
-     */
-    public Person(String name, String OIB) {
-        this.name = name;
-        this.OIB = OIB;
-        this.id = UUID.randomUUID().toString();
-        Person.addPerson(this);
-    }
 
 
-    public Person() {}
 
     static Map<String, String> getBasicInfo(Scanner sc) {
         Map<String, String> map = new HashMap<>();
@@ -95,6 +100,10 @@ public abstract class Person implements Serializable {
         map.put("ime", ime);
         map.put("oib", oib);
         return map;
+    }
+    @JsonbTransient
+    public String getSelectionLine() {
+        return this.name;
     }
 
     /**

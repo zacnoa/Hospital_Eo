@@ -11,6 +11,7 @@ public class PersonnelStorage {
     public static Map<String,Room> roomStorage=new HashMap<>();
     public static Map<String,Visitor> visitorStorage =new HashMap<>();
 
+
     public static Doctor findDoctor(String id)
     {
         return doctorStorage.get(id);

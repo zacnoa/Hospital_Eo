@@ -1,5 +1,7 @@
 package entity;
 
+import jakarta.json.bind.annotation.JsonbTransient;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,19 @@ public final class Doctor extends Employee implements PrintableMenuSelection, Se
     }
 
 
+
+    @JsonbTransient
+    public List<Patient> getPatients() {
+        return PersonnelStorage.getPatientsByIds(patientIds);
+    }
+
+    @JsonbTransient
+    public void setPatients(List<Patient> patients) {
+        this.patientIds = patients.stream()
+                .map(Patient::getId)
+                .toList();
+    }
+
     public String getSpecialty() {
         return specialty;
     }
@@ -30,23 +45,9 @@ public final class Doctor extends Employee implements PrintableMenuSelection, Se
         this.specialty = specialty;
     }
 
-
-    public List<Patient> getPatients() {
-        return PersonnelStorage.getPatientsByIds(patientIds);
-    }
-
-
-    public void setPatients(List<Patient> patients) {
-        this.patientIds = patients.stream()
-                .map(Patient::getId)
-                .toList();
-    }
-
-
     public List<String> getPatientIds() {
         return patientIds;
     }
-
 
     public void setPatientIds(List<String> patients) {
         this.patientIds = patients;
@@ -56,9 +57,6 @@ public final class Doctor extends Employee implements PrintableMenuSelection, Se
         patientIds.add(patient.getId());
     }
 
-    public String getSelectionLine() {
-        return super.getName();
-    }
 
     public static Doctor generateDoctor(Scanner sc) {
         System.out.println("Unesite ime doktora:");
