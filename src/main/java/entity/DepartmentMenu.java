@@ -1,7 +1,7 @@
 package entity;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import RunTimeLog.RuntimeLogger;
+import userLogs.LogManager;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class DepartmentMenu {
 
-    private static Logger logger= LoggerFactory.getLogger(DepartmentMenu.class);
+
 
     public static void DepartmentMenu(Department department, Scanner sc)
     {
@@ -40,8 +40,9 @@ public class DepartmentMenu {
                             }catch(IllegalArgumentException e)
                             {
                                 System.out.println(e.getMessage());
-                                logger.error(e.getMessage(),e);
+                                RuntimeLogger.logger.error(e.getMessage(),e);
                             }
+                        LogManager.addLog("Dodan je doktor");
 
                     }
                     case "2" ->{
@@ -49,23 +50,29 @@ public class DepartmentMenu {
                                 department.addPatient(sc);
                             }
                             catch (IndexOutOfBoundsException e) {
-                                logger.error(e.getMessage(),e);
+                                RuntimeLogger.logger.error(e.getMessage(),e);
                                 System.out.println(e.getMessage());
                             }
                             catch(PersonnelException e)
                             {
 
-                                logger.error(e.getMessage(),e);
+                                RuntimeLogger.logger.error(e.getMessage(),e);
                                 System.out.println(e.getMessage());
                             }
                             catch(IllegalArgumentException e)
                             {
-                                logger.error(e.getMessage(),e);
+                                RuntimeLogger.logger.error(e.getMessage(),e);
                                 System.out.println(e.getMessage());
                             }
+                        LogManager.addLog("Dodan je pacijent");
                     }
-                    case "3" ->{
-                        department.addRoom();
+                    case "3" -> {
+                        try {
+                            department.addRoom();
+                        }catch (IOException e) {
+                            RuntimeLogger.logger.error("Error while serializing room", e.getMessage(), e);
+                        }
+                        LogManager.addLog("Dodana je soba");
                     }
                     case "4"->{
                         department.doctorSearchBySpecialty(sc);
@@ -75,8 +82,9 @@ public class DepartmentMenu {
                             department.addVisitor(sc);
                         }catch(IOException e)
                         {
-                            logger.error(e.getMessage(),e);
+                            RuntimeLogger.logger.error(e.getMessage(),e);
                         }
+                        LogManager.addLog("Dodan je posjetitelj");
                     }
                     case "6"->{
                         department.patientSearchByDiagnosis(sc);

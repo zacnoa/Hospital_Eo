@@ -3,6 +3,7 @@ package Main;
 import entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import userLogs.LogManager;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -69,6 +70,7 @@ public class Main {
                             logger.error("Greska pri spremanju departmentStorage u bazu",e.getMessage(), e);
                         }
                     } while (failedFlag);
+                    LogManager.addLog("Stvoren je novi odjel");
                 }
                 case "2" -> {
                     String secondCommand;
@@ -96,7 +98,7 @@ public class Main {
                     }
                 }
                 case "5" ->{
-
+                    LogManager.printLogs();
                 }
             }
         }while(!"X".equalsIgnoreCase(mainCommand));

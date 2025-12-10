@@ -1,8 +1,7 @@
 package entity;
 
+import RunTimeLog.RuntimeLogger;
 import jakarta.json.bind.annotation.JsonbTransient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -15,12 +14,12 @@ public class Department implements PrintableMenuSelection, Serializable {
     private String name;
 
 
-    private List<String> doctorIds = new ArrayList<>();
-    private List<String> roomIds = new ArrayList<>();
-    private List<String> patientIds = new ArrayList<>();
-    private List<String> visitorIds = new ArrayList<>();
+    private transient List<String> doctorIds = new ArrayList<>();
+    private transient List<String> roomIds = new ArrayList<>();
+    private transient List<String> patientIds = new ArrayList<>();
+    private transient List<String> visitorIds = new ArrayList<>();
 
-    private static final Logger logger = LoggerFactory.getLogger(Department.class);
+
 
     public Department(String name) {
         this.name = name;
@@ -130,7 +129,7 @@ public class Department implements PrintableMenuSelection, Serializable {
             DataBaseManager.jsonSerialization(PersonnelStorage.doctorStorage, DataType.DOCTOR);
             DataBaseManager.jsonSerialization(DepartmentStorage.departments, DataType.DEPARTMENT);
         } catch (IOException e) {
-            logger.error("Error while serializing doctor", e.getMessage(), e);
+            RuntimeLogger.logger.error("Error while serializing doctor", e.getMessage(), e);
         }
     }
 
@@ -148,7 +147,7 @@ public class Department implements PrintableMenuSelection, Serializable {
         System.out.println("Upišite ime novog Odjela:");
         String name = sc.nextLine();
         if (name.isEmpty()) throw new IllegalArgumentException("Ime odjela ne može biti prazno");
-        logger.info("Stvoren je odjel sa imenom:", name);
+        RuntimeLogger.logger.info("Department created: {}", name);
         return new Department(name);
     }
 
@@ -189,23 +188,21 @@ public class Department implements PrintableMenuSelection, Serializable {
         try {
             DataBaseManager.updateAllCollections();
         } catch(IOException e) {
-            logger.error("Error while serializing patient", e.getMessage(), e);
+            RuntimeLogger.logger.error("Error while serializing patient", e.getMessage(), e);
         }
 
-        logger.info("Kreiran je pacijent s imenom: {}", patient.getName());
+        RuntimeLogger.logger.info("Kreiran je pacijent s imenom: {}", patient.getName());
     }
 
-    public void addRoom() {
+    public void addRoom() throws IOException {
         Room newRoom = new Room();
         roomIds.add(newRoom.getId());
         PersonnelStorage.roomStorage.put(newRoom.getId(), newRoom);
 
-        try {
+
             DataBaseManager.jsonSerialization(PersonnelStorage.roomStorage, DataType.ROOM);
             DataBaseManager.jsonSerialization(DepartmentStorage.departments, DataType.DEPARTMENT);
-        } catch (IOException e) {
-            logger.error("Error while serializing room", e.getMessage(), e);
-        }
+
     }
 
 
@@ -237,4 +234,81 @@ public class Department implements PrintableMenuSelection, Serializable {
                 .findAny()
                 .orElseThrow(NoSuchElementException::new));
     }
+
+
+
+
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        // 1. Zapiši obična polja
+        out.defaultWriteObject(); // zapisuje 'name'
+
+        // 2. Zapiši prave objekte umjesto ID-jeva
+        out.writeInt(doctorIds.size());
+        for(String id : doctorIds) {
+            Doctor doctor = PersonnelStorage.findDoctor(id);
+            out.writeObject(doctor);
+        }
+
+        out.writeInt(patientIds.size());
+        for(String id : patientIds) {
+            Patient patient = PersonnelStorage.findPatient(id);
+            out.writeObject(patient);
+        }
+
+        out.writeInt(roomIds.size());
+        for(String id : roomIds) {
+            Room room = PersonnelStorage.findRoom(id);
+            out.writeObject(room);
+        }
+
+        out.writeInt(visitorIds.size());
+        for(String id : visitorIds) {
+            Visitor visitor = PersonnelStorage.findVisitor(id);
+            out.writeObject(visitor);
+        }
+    }
+
+
+
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        // 1. Pročitaj obična polja
+        in.defaultReadObject();
+
+        // 2. Učitaj stvarne objekte i kreiraj ID-jeve i storage
+        int doctorSize = in.readInt();
+        doctorIds = new ArrayList<>();
+        for(int i=0; i<doctorSize; i++) {
+            Doctor doctor = (Doctor) in.readObject();
+            doctorIds.add(doctor.getId());
+            PersonnelStorage.doctorStorage.put(doctor.getId(), doctor);
+        }
+
+        int patientSize = in.readInt();
+        patientIds = new ArrayList<>();
+        for(int i=0; i<patientSize; i++) {
+            Patient patient = (Patient) in.readObject();
+            patientIds.add(patient.getId());
+            PersonnelStorage.patientStorage.put(patient.getId(), patient);
+        }
+
+        int roomSize = in.readInt();
+        roomIds = new ArrayList<>();
+        for(int i=0; i<roomSize; i++) {
+            Room room = (Room) in.readObject();
+            roomIds.add(room.getId());
+            PersonnelStorage.roomStorage.put(room.getId(), room);
+        }
+
+        int visitorSize = in.readInt();
+        visitorIds = new ArrayList<>();
+        for(int i=0; i<visitorSize; i++) {
+            Visitor visitor = (Visitor) in.readObject();
+            visitorIds.add(visitor.getId());
+            PersonnelStorage.visitorStorage.put(visitor.getId(), visitor);
+        }
+    }
+
+
+
 }

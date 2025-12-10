@@ -23,9 +23,6 @@ public class Patient extends Person implements PrintableMenuSelection, Serializa
     public PatientStatus status;
     private String roomId;
 
-    private final static Logger logger = LoggerFactory.getLogger(Patient.class);
-
-
     protected Patient(PatientBuilder patientBuilder) {
         super(patientBuilder.name, patientBuilder.OIB);
         this.diagnosis = patientBuilder.diagnosis;

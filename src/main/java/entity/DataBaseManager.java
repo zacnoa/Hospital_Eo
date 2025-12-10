@@ -1,9 +1,7 @@
 package entity;
+import RunTimeLog.RuntimeLogger;
 import adapters.PatientAdapter;
 import jakarta.json.bind.*;
-import jakarta.xml.bind.JAXBContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -11,13 +9,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 
 public class DataBaseManager {
 
-    private static Logger logger = LoggerFactory.getLogger(DataBaseManager.class);
+
     private static  JsonbConfig config = new JsonbConfig().withAdapters(new PatientAdapter());
     private static Jsonb jsonb = JsonbBuilder.create(config);
 
@@ -39,7 +36,7 @@ public class DataBaseManager {
 
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(fileToWrite))) {
             writer.write(json);
-            logger.info("JSON Serialization Successfull:" + json);
+            RuntimeLogger.logger.info("JSON Serialization Successfull:" + json);
 
         }
 
@@ -131,22 +128,6 @@ public class DataBaseManager {
                     break;
                 }
             }
-            PersonnelStorage.doctorStorage=departmentsLocal.stream()
-                    .flatMap(department->department.getDoctors().stream())
-                    .collect(Collectors.toMap(Doctor::getId ,item->item,(first,second)->first));
-
-            PersonnelStorage.visitorStorage=departmentsLocal.stream()
-                    .flatMap(department->department.getVisitors().stream())
-                    .collect(Collectors.toMap(Visitor::getId ,item->item,(first,second)->first));
-
-            PersonnelStorage.patientStorage=departmentsLocal.stream()
-                    .flatMap(department->department.getPatients().stream())
-                    .collect(Collectors.toMap(Patient::getId ,item->item,(first,second)->first));
-
-            PersonnelStorage.roomStorage=departmentsLocal.stream()
-                    .flatMap(department->department.getRooms().stream())
-                    .collect(Collectors.toMap(Room::getId ,item->item,(first,second)->first));
-
         }
         DepartmentStorage.setDepartments(departmentsLocal);
     }
